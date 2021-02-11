@@ -14,7 +14,7 @@
 + table_name
 + note_id
 
-## CELL_T
+## CELLS_T
 + cell_id
 + table_id
 + cell_name
