@@ -1,11 +1,15 @@
 from db.engines import sqlite_engine
+import re
 
 
 class base_t:
-    self.__table__  = None
-
     def __init__(self):
+        self.__table__  = None
+        self.init_schema()
         self.engine = sqlite_engine
+
+    def init_schema(self): # used to init table and fields name
+        pass
 
     def query_beautify(self, query):
         return re.sub(' +', ' ', query.replace('\n', ' ').strip())
@@ -19,7 +23,7 @@ class base_t:
         self.engine.execute(query)
         self.engine.commit()
 
-    def get_column(self, column, where:list = None):
+    def get_column(self, column, where:list = []):
         where = ' AND '.join(['1=1'] + where)
         query = f'''
             SELECT {column} 
@@ -37,6 +41,12 @@ class base_t:
 
     def insert_data(self):
         fields, values = self.get_list()
+
+        # clean data before insert
+        fields = [fields[i] for i, v in enumerate(values) if v]
+        values = [v for v in values if v]
+
+        # build query
         fields = ','.join(fields)
         values = ','.join(values)
         query = f'''
@@ -54,12 +64,13 @@ class base_t:
 
 
 class notes_t(base_t):
-    self.__table__ = 'NOTES_T'
-    self._fields_name = ['note_id', 'note_name']
+    def init_schema(self):
+        self.__table__ = 'NOTES_T'
+        self._fields_name = ['note_id', 'note_name']
 
-    # field value
-    self.note_id = None
-    self.note_name = None
+        # field value
+        self.note_id = None
+        self.note_name = None
 
     def get_list(self):
         value_list = [self.note_id, self.note_name]
@@ -67,12 +78,13 @@ class notes_t(base_t):
 
 
 class relations_t(base_t):
-    self.__table__ = 'RELATIONS_T'
-    self._fields_name = ['parent_id', 'child_id']
+    def init_schema(self):
+        self.__table__ = 'RELATIONS_T'
+        self._fields_name = ['parent_id', 'child_id']
 
-    # field value
-    self.parent_id = None
-    self.child_id = None
+        # field value
+        self.parent_id = None
+        self.child_id = None
 
     def get_list(self):
         value_list = [self.parent_id, self.child_id]
@@ -80,13 +92,14 @@ class relations_t(base_t):
 
 
 class tables_t(base_t):
-    self.__table__ = 'TABLES_T'
-    self._fields_name = ['table_id', 'table_name', 'note_id']
+    def init_schema(self):
+        self.__table__ = 'TABLES_T'
+        self._fields_name = ['table_id', 'table_name', 'note_id']
 
-    # field value
-    self.table_id = None
-    self.table_name = None
-    self.note_id = None
+        # field value
+        self.table_id = None
+        self.table_name = None
+        self.note_id = None
 
     def get_list(self):
         value_list = [self.table_id, self.table_name, self.note_id]
@@ -94,20 +107,21 @@ class tables_t(base_t):
 
 
 class cells_t(base_t):
-    self.__table__ = 'CELLS_T'
-    self._fields_name = [
-        'cell_id', 'table_id', 'cell_name', 'cell_note',
-        'start_time', 'end_time', 'is_notify'
-    ]
+    def init_schema(self):
+        self.__table__ = 'CELLS_T'
+        self._fields_name = [
+            'cell_id', 'table_id', 'cell_name', 'cell_note',
+            'start_time', 'end_time', 'is_notify'
+        ]
 
-    # field value
-    self.cell_id = None
-    self.table_id = None
-    self.cell_name = None
-    self.cell_note = None
-    self.start_time = None
-    self.end_time = None
-    self.is_notify = None
+        # field value
+        self.cell_id = None
+        self.table_id = None
+        self.cell_name = None
+        self.cell_note = None
+        self.start_time = None
+        self.end_time = None
+        self.is_notify = None
 
     def get_list(self):
         value_list = [
