@@ -6,6 +6,7 @@
 + note_name
 
 ## RELATIONS_T
++ relation_id
 + parent_id
 + child_id
 

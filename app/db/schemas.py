@@ -68,6 +68,10 @@ class notes_t(base_t):
         self.__table__ = 'NOTES_T'
         self._fields_name = ['note_id', 'note_name']
 
+        # field name
+        self._note_id = self._fields_name[0]
+        self._note_name = self._fields_name[1]
+
         # field value
         self.note_id = None
         self.note_name = None
@@ -80,14 +84,20 @@ class notes_t(base_t):
 class relations_t(base_t):
     def init_schema(self):
         self.__table__ = 'RELATIONS_T'
-        self._fields_name = ['parent_id', 'child_id']
+        self._fields_name = ['relation_id', 'parent_id', 'child_id']
+
+        # field name
+        self._relation_id = self._fields_name[0]
+        self._parent_id = self._fields_name[1]
+        self._child_id = self._fields_name[2]
 
         # field value
+        self.relation_id = None
         self.parent_id = None
         self.child_id = None
 
     def get_list(self):
-        value_list = [self.parent_id, self.child_id]
+        value_list = [self.relation_id, self.parent_id, self.child_id]
         return self._fields_name, value_list
 
 
@@ -95,6 +105,11 @@ class tables_t(base_t):
     def init_schema(self):
         self.__table__ = 'TABLES_T'
         self._fields_name = ['table_id', 'table_name', 'note_id']
+
+        # field name
+        self._table_id = self._fields_name[0]
+        self._table_name = self._fields_name[1]
+        self._note_id = self._fields_name[2]
 
         # field value
         self.table_id = None
@@ -113,6 +128,15 @@ class cells_t(base_t):
             'cell_id', 'table_id', 'cell_name', 'cell_note',
             'start_time', 'end_time', 'is_notify'
         ]
+
+        # field name
+        self._cell_id = self._fields_name[0]
+        self._table_id = self._fields_name[1]
+        self._cell_name = self._fields_name[2]
+        self._cell_note = self._fields_name[3]
+        self._start_time = self._fields_name[4]
+        self._end_time = self._fields_name[5]
+        self._is_notify = self._fields_name[6]
 
         # field value
         self.cell_id = None
