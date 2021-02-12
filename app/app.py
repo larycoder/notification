@@ -10,9 +10,13 @@ bp = Blueprint('api', __name__)
 api = Api(bp)
 
 # register controllers
-from controllers.note_controller import NoteController
+from controllers.note_controller import (
+    NotesController,
+    NoteChildsController
+)
 
-api.add_resource(NoteController, '/notes')
+api.add_resource(NotesController, '/notes')
+api.add_resource(NoteChildsController, '/notes/<note_id>')
 
 # start simple app
 app = Flask(__name__)
