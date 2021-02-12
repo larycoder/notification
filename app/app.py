@@ -12,11 +12,13 @@ api = Api(bp)
 # register controllers
 from controllers.note_controller import (
     NotesController,
-    NoteChildsController
+    NoteChildsController,
+    NewNoteController
 )
 
 api.add_resource(NotesController, '/notes')
 api.add_resource(NoteChildsController, '/notes/<note_id>')
+api.add_resource(NewNoteController, '/notes')
 
 # start simple app
 app = Flask(__name__)

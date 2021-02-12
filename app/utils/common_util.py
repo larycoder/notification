@@ -11,7 +11,7 @@ class KeyUtil:
 
     @staticmethod
     def get_key(topic:str):
-        timestamp = Key.get_utc_timestamp()
+        timestamp = KeyUtil.get_utc_timestamp()
         topic_hashed = hash(topic)
         return str(timestamp) + '+' + str(topic_hashed)
 
