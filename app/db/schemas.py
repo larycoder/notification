@@ -1,5 +1,9 @@
 from db.engines import sqlite_engine
+from utils.log_util import Log_Util
 import re
+
+
+logger = Log_Util.get_logger()
 
 
 class base_t:
@@ -16,10 +20,12 @@ class base_t:
 
     def get_execute(self, query):
         query = self.query_beautify(query)
+        logger.debug(query)
         return self.engine.execute(query)
 
     def commit_execute(self, query):
         query = self.query_beautify(query)
+        logger.debug(query)
         self.engine.execute(query)
         self.engine.commit()
 
