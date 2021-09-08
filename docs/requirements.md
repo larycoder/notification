@@ -21,3 +21,9 @@ From my view, I want the program that is fast bootup, simple and auto save conte
 
 Additional, I expect to build my own query and store it as list of my own toolset which I can use for fast query. And sometime, I want to query on whole content so grep support is a good option.
 
+# Revision (2021-09-09)
+
+[INFO] I have some forward step from the starting point of this project. I have a better idea with clearer view on the system.
+[INFO] I detect that initial project ambition is quite impossible then that why its implementation met difficulty and could not continue.
+[INFO] I update new README and restart project. (requirement hold on README for now)
+
