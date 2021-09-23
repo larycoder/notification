@@ -17,3 +17,6 @@ This project is aimed at developing a time-indexing notebooks for time-managemen
 ## Technique view
 The project follows email style since it is my first imagination on how this system would effectively work.
 Look on [docs/log.md](docs/log.md)
+
+## Requirement
+1. Python 3.6
