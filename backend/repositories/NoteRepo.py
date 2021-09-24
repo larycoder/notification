@@ -8,15 +8,19 @@ class NoteRepo(BaseRepo):
         super().__init__(NoteModel)
 
     def main(self):
-        insert_list = [
-            self.insert(subject="[FIRST]", content="Hello World"),
-            self.insert(subject="[SECOND]", content="Nice to meet you"),
-        ]
-        self.execute_many(insert_list)
+        n1 = NoteModel()
+        n1.subject = "[FIRST]"
+        n1.content = "Hello World"
+        self.add_object(n1)
 
-        result = self.execute(self.select())
-        for row in result:
-            print(row)
+        n2 = NoteModel()
+        n2.subject = "[SECOND]"
+        n2.content = "Nice to meet you"
+        self.add_object(n2)
+
+        self.commit()
+
+        print(self.execute(self.select()).scalars().all())
 
 
 if __name__ == '__main__':
