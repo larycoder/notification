@@ -7,11 +7,6 @@ class NoteRepo(BaseRepo):
     def __init__(self):
         super().__init__(NoteModel)
 
-    def select(self):
-        return text("""
-            SELECT * FROM notes
-        """)
-
     def main(self):
         insert_list = [
             self.insert(subject="[FIRST]", content="Hello World"),
@@ -20,7 +15,7 @@ class NoteRepo(BaseRepo):
         self.execute_many(insert_list)
 
         result = self.execute(self.select())
-        for row in result.mappings():
+        for row in result:
             print(row)
 
 

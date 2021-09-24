@@ -1,5 +1,5 @@
 # __init__ file for repositories module
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
 from db.engine import engine
 
@@ -11,6 +11,9 @@ class BaseRepo():
 
     def insert(self, **kwargs):
         return insert(self.model).values(kwargs)
+
+    def select(self):
+        return select(self.model)
 
     def execute_many(self, stmt_list: list) -> list:
         result_list = []

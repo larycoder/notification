@@ -5,10 +5,10 @@ from sqlalchemy import (
     DateTime
 )
 from sqlalchemy import func
-from models import Base
+from models import BaseModel, ReprModel
 
 
-class NoteModel(Base):
+class NoteModel(BaseModel, ReprModel):
     __tablename__ = 'notes'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
