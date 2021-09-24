@@ -30,9 +30,9 @@ class BaseRepo():
 
     # ORM expression
     def check_object(self, model):
-        if isinstance(model, type(self.model)):
+        if not isinstance(model, self.model):
             self.session.close()
-            raise Exception('Wrong Model: expecting {type(self.model)} received {type(model)}')
+            raise Exception(f'Wrong Model: expecting {self.model} received {type(model)}')
 
     def add_object(self, model):
         self.check_object(model)
