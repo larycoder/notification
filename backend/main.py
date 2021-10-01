@@ -1,5 +1,7 @@
 from flask import Flask
 
+from resources.note import note_bp
+
 
 def init_app():
     app = Flask(__name__)
@@ -10,7 +12,6 @@ def init_app():
         return 'hello'
 
     # Resource
-    from resources.note import note_bp
     app.register_blueprint(note_bp, url_prefix="/notes")
 
     return app

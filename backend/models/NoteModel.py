@@ -16,3 +16,12 @@ class NoteModel(BaseModel, ReprModel):
     content = Column(Text, nullable=False)
     created_time = Column(DateTime, server_default=func.now())
     updated_time = Column(DateTime, server_default=func.now())
+
+    def toJSON(self):
+        return {
+            'id': self.id,
+            'subject': self.subject,
+            'content': self.content,
+            'created_time': self.created_time,
+            'updated_time': self.updated_time
+        }
