@@ -1,3 +1,6 @@
+from datetime import datetime, date
+
+
 class JsonEncoder:
 
     # Requirement:
@@ -17,7 +20,11 @@ class JsonEncoder:
                 hasattr(obj, 'toJSON')
                 and callable(getattr(obj, 'toJSON'))
         ):
-            result = obj.toJSON()
+            result = JsonEncoder.encode(obj.toJSON())
+        elif isinstance(obj, (datetime, date)):
+            result = obj.isoformat()
+        else:
+            result = obj
 
         if result is None:
             raise RuntimeError('Could not encode object.')
