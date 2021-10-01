@@ -9,6 +9,10 @@ def init_app():
     def hello():
         return 'hello'
 
+    # Resource
+    from resources.note import note_bp
+    app.register_blueprint(note_bp, url_prefix="/notes")
+
     return app
 
 
