@@ -26,4 +26,5 @@ from models.NoteModel import NoteModel
 
 
 # Emit DDL to DB
-BaseModel.metadata.create_all(engine)
+if __name__ == "__main__":
+    BaseModel.metadata.create_all(engine)
