@@ -1,6 +1,5 @@
 # __init__ file of models module
 from sqlalchemy.orm import registry
-from db.engine import engine
 
 
 mapped_registry = registry()
@@ -20,11 +19,3 @@ class ReprModel():
             k: v for k, v in vars(self).items() if k in c_list
         }
         return f'{self.__tablename__} {data_list}'
-
-# Register model
-from models.NoteModel import NoteModel
-
-
-# Emit DDL to DB
-if __name__ == "__main__":
-    BaseModel.metadata.create_all(engine)
