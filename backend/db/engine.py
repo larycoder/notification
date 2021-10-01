@@ -2,4 +2,5 @@ from sqlalchemy import create_engine
 
 
 # sqlite engine
-engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
+sql_connection = "mysql://username:password@127.0.0.1:3306/notification"
+engine = create_engine(sql_connection, echo=True, future=True)
