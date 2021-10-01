@@ -12,7 +12,7 @@ def init_app():
         return 'hello'
 
     # Resource
-    app.register_blueprint(note_bp, url_prefix="/notes")
+    app.register_blueprint(note_bp, url_prefix="/noteApi")
 
     return app
 
