@@ -17,11 +17,23 @@ class NoteModel(BaseModel, ReprModel):
     created_time = Column(DateTime, server_default=func.now())
     updated_time = Column(DateTime, server_default=func.now())
 
-    def toJSON(self):
-        return {
-            'id': self.id,
-            'subject': self.subject,
-            'content': self.content,
-            'created_time': self.created_time,
-            'updated_time': self.updated_time
-        }
+    @staticmethod
+    def __export_attribute():
+        attrs = [
+            'id', 'subject', 'content',
+            'created_time', 'updated_time'
+        ]
+        return attrs[:]
+
+    def toJSON(self) -> dict:
+        attribute_list = NoteModel.__export_attribute()
+        json = {}
+        for k in attribute_list:
+            json[k] = self.__dict__.get(k)
+        return json
+
+    def loadJSON(self, obj: dict):
+        attr_list = NoteModel.__export_attribute()
+        attr_list.remove('id')
+        for k in attr_list:
+            self.__dict__[k] = obj.get(k)
