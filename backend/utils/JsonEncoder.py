@@ -8,7 +8,6 @@ class JsonEncoder:
     # toJSON method
     @staticmethod
     def encode(obj):
-        result = None
         if isinstance(obj, list):
             result = []
             for v in obj:
