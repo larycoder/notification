@@ -1,6 +1,7 @@
 from sqlalchemy import (
     Column,
     Integer,
+    Float,
     Text,
     DateTime
 )
@@ -8,33 +9,37 @@ from sqlalchemy import func
 from models import BaseModel, ReprModel
 
 
-class NoteModel(BaseModel, ReprModel):
+class TaskModel(BaseModel, ReprModel):
     __tablename__ = 'notes'
     __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    subject = Column(Text, nullable=False)
-    content = Column(Text, nullable=False)
+    task = Column(Text, nullable=False)
+    notes = Column(Text, nullable=True)
+    label = Column(Text, nullable=True)
+    priority = Column(Text, nullable=True)
     created_time = Column(DateTime, server_default=func.now())
-    updated_time = Column(DateTime, server_default=func.now())
+    deadline = Column(DateTime, nullable=True)
+    measurement = Column(Text, nullable=True)
+    process = Column(Float, nullable=True)
 
     @staticmethod
     def __export_attribute():
         attrs = [
-            'id', 'subject', 'content',
-            'created_time', 'updated_time'
+            'id', 'task', 'notes', 'label', 'priority',
+            'created_time', 'deadline', 'measurement', 'process'
         ]
         return attrs[:]
 
     def toJSON(self) -> dict:
-        attribute_list = NoteModel.__export_attribute()
+        attribute_list = TaskModel.__export_attribute()
         json = {}
         for k in attribute_list:
             json[k] = self.__dict__.get(k)
         return json
 
     def loadJSON(self, obj: dict):
-        attr_list = NoteModel.__export_attribute()
+        attr_list = TaskModel.__export_attribute()
         attr_list.remove('id')
         for k in attr_list:
             self.__dict__[k] = obj.get(k)
