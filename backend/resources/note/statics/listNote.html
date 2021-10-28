@@ -2,8 +2,28 @@
 
 <head>
     <title>List Note</title>
+    <script src="js/api.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/render.js"></script>
+    <script>
+        function createInfoTable() {
+            let opt = document.getElementById("log_opt_type").value;
+            let data = callSimpleApi("GET", "/noteApi/" + opt);
+            data = convertTextToJson(data);
+            document.getElementById("info").innerHTML = renderJsonAsTable(data, "info");
+        }
+    </script>
 </head>
 
 <body>
     <h2>Dashboard</h2>
+    <div id="log_opt">
+        <label for="log_opt_type">Log Type:</label>
+        <select id="log_opt_type">
+            <option value="task" selected>task</option>
+            <option value="diary">diary</option>
+        </select>
+        <button type="button" onclick="createInfoTable()">Submit</button>
+    </div>
+    <div id="info"></div>
 </body>
