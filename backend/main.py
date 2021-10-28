@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_file
 
 from resources.note import note_bp
 
@@ -10,6 +10,10 @@ def init_app():
     @app.route('/hello')
     def hello():
         return 'hello'
+
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_file('favicon.ico')
 
     # Resource
     app.register_blueprint(note_bp, url_prefix="/noteApi")
