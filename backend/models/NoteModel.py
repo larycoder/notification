@@ -10,7 +10,6 @@ from models import BaseModel, ReprModel
 
 class NoteModel(BaseModel, ReprModel):
     __tablename__ = 'notes'
-    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     subject = Column(Text, nullable=False)

@@ -10,8 +10,7 @@ from models import BaseModel, ReprModel
 
 
 class TaskModel(BaseModel, ReprModel):
-    __tablename__ = 'notes'
-    __table_args__ = {'extend_existing': True}
+    __tablename__ = 'tasks'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     task = Column(Text, nullable=False)
