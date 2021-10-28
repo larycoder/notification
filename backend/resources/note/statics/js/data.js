@@ -24,3 +24,16 @@ function getColumnValuesOfTable(table, columnName) {
     }
     return array;
 }
+
+
+function convertUrlParamToJson(url) {
+    let params = url.split("?");
+    params = params[params.length - 1];
+    let array = params.split("&");
+    let obj = {};
+    for(let value of array) {
+        let pair = value.split("=");
+        obj[pair[0]] = pair[1];
+    }
+    return obj;
+}
