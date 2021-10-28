@@ -6,7 +6,7 @@ from resources.note.TaskResource import TaskResource
 from resources.note.DiaryResource import DiaryResource
 
 note_bp = Blueprint('noteApi', __name__,
-                    static_folder='static', static_url_path='home')
+                    static_folder='statics', static_url_path='/statics')
 api = Api(note_bp)
 
 api.add_resource(NoteResource, '/note')
