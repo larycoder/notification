@@ -17,6 +17,7 @@ class TaskResource(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('task', required=True, type=str)
+        parser.add_argument('parentId', type=int)
         parser.add_argument('notes', type=str)
         parser.add_argument('label', type=str)
         parser.add_argument('priority', type=str)

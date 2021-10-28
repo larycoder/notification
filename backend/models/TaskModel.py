@@ -5,7 +5,7 @@ from sqlalchemy import (
     Text,
     DateTime
 )
-from sqlalchemy import func
+from sqlalchemy import func, ForeignKey
 from models import BaseModel, ReprModel
 
 
@@ -13,6 +13,7 @@ class TaskModel(BaseModel, ReprModel):
     __tablename__ = 'tasks'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    parentId = Column(Integer, ForeignKey("tasks.id"))
     task = Column(Text, nullable=False)
     notes = Column(Text, nullable=True)
     label = Column(Text, nullable=True)
@@ -25,7 +26,7 @@ class TaskModel(BaseModel, ReprModel):
     @staticmethod
     def __export_attribute():
         attrs = [
-            'id', 'task', 'notes', 'label', 'priority',
+            'id', 'task', 'notes', 'label', 'priority', 'parentId',
             'created_time', 'deadline', 'measurement', 'process'
         ]
         return attrs[:]
