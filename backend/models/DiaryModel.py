@@ -6,7 +6,7 @@ from sqlalchemy import func
 from sqlalchemy import ForeignKey
 
 from models import BaseModel, ReprModel
-
+from utils.TimeUtil import TimeUtil
 
 class DiaryModel(BaseModel, ReprModel):
     __tablename__ = 'diary'
@@ -16,13 +16,13 @@ class DiaryModel(BaseModel, ReprModel):
     notes = Column(Text, nullable=True)
     created_time = Column(DateTime, server_default=func.now())
     start_time = Column(DateTime, nullable=True)
-    duration = Column(DateTime, nullable=True)
+    duration = Column(Integer, nullable=True)
     taskId = Column(Integer, ForeignKey("tasks.id"))
 
     @staticmethod
     def __export_attribute():
         attrs = [
-            'id', 'activity', 'notes', 'create_time',
+            'id', 'activity', 'notes', 'created_time',
             'start_time', 'duration', 'taskId'
         ]
         return attrs[:]
@@ -31,7 +31,10 @@ class DiaryModel(BaseModel, ReprModel):
         attribute_list = DiaryModel.__export_attribute()
         json = {}
         for k in attribute_list:
-            json[k] = self.__dict__.get(k)
+            if k == 'duration':
+                json[k] = str(TimeUtil.second_to_datetime(self.duration))
+            else:
+                json[k] = self.__dict__.get(k)
         return json
 
     def loadJSON(self, obj: dict):
