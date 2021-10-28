@@ -1,10 +1,10 @@
-from models.TaskModel import TaskModel
+from models.DiaryModel import DiaryModel
 from repositories import BaseRepo
 
 
 class NoteRepo(BaseRepo):
     def __init__(self):
-        super().__init__(TaskModel)
+        super().__init__(DiaryModel)
 
     def list_all(self):
         stmt = self.select()
