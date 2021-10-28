@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Detail Note</title>
+    <script src="js/api.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+        let url = window.location.href;
+        let params = convertUrlParamToJson(url);
+        console.log(params);
+    </script>
+</head>
+
+<body>
+    <h2>Note Detail</h2>
+    <div id="task"></div>
+    <div id="notes"></div>
+    <div id="extra_info"></div>
+</body>
