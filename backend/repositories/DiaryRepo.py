@@ -2,7 +2,7 @@ from models.DiaryModel import DiaryModel
 from repositories import BaseRepo
 
 
-class NoteRepo(BaseRepo):
+class DiaryRepo(BaseRepo):
     def __init__(self):
         super().__init__(DiaryModel)
 

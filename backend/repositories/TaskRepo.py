@@ -2,7 +2,7 @@ from models.TaskModel import TaskModel
 from repositories import BaseRepo
 
 
-class NoteRepo(BaseRepo):
+class TaskRepo(BaseRepo):
     def __init__(self):
         super().__init__(TaskModel)
 
