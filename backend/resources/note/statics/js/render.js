@@ -27,3 +27,19 @@ function renderJsonAsTable(obj, posId) {
 
     return `<table border=1 id="${posId}_table">${headText} ${dataText}</table>`;
 }
+
+
+function addColToTable(table, name, values) {
+    let head = table.getElementsByTagName("tr")[0];
+    let rows = table.getElementsByTagName("tr");
+    rows = Object.values(rows);
+    rows = rows.slice(1, rows.length);
+
+    head.innerHTML += "<th>" + name + "</th>";
+    let idx = 0;
+    for(let row of rows) {
+        console.log(values[idx]);
+        row.innerHTML += "<td>" + values[idx] + "</td>";
+        idx += 1;
+    }
+}

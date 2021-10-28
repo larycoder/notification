@@ -12,6 +12,25 @@
             data = convertTextToJson(data);
             document.getElementById("info").innerHTML = renderJsonAsTable(data, "info");
         }
+
+        function addDetailNotePageToTable() {
+            let table = document.getElementById("info_table");
+            let idValues = getColumnValuesOfTable(table, "id");
+            let opt = document.getElementById("log_opt_type").value;
+
+            let linkValues = [];
+            for(id of idValues) {
+                let link = "detailNote.html?id=" + id + "&type=" + opt;
+                let tag = "<a href = \"" + link + "\">ref</a>";
+                linkValues.push(tag);
+            }
+            addColToTable(table, "detail", linkValues);
+        }
+
+        function showInfoTable() {
+            createInfoTable();
+            addDetailNotePageToTable();
+        }
     </script>
 </head>
 
@@ -23,7 +42,7 @@
             <option value="task" selected>task</option>
             <option value="diary">diary</option>
         </select>
-        <button type="button" onclick="createInfoTable()">Submit</button>
+        <button type="button" onclick="showInfoTable()">Submit</button>
     </div>
     <div id="info"></div>
 </body>
