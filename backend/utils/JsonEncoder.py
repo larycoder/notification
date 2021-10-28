@@ -24,7 +24,4 @@ class JsonEncoder:
             result = obj.isoformat()
         else:
             result = obj
-
-        if result is None:
-            raise RuntimeError('Could not encode object.')
         return result
