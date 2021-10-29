@@ -9,10 +9,22 @@ from utils.JsonEncoder import JsonEncoder
 
 
 class TaskResource(Resource):
-    def get(self):
+    def get_list(self):
         repo = TaskRepo()
         data_list = repo.list_all()
         return JsonEncoder.encode(ResponseModel(data_list))
+
+    def get_object(self, task_id):
+        repo = TaskRepo()
+        stmt = repo.select().where(TaskModel.id == task_id)
+        obj = repo.execute(stmt).scalar_one()
+        return JsonEncoder.encode(ResponseModel(obj))
+
+    def get(self, taskId=None):
+        if taskId is None:
+            return self.get_list()
+        else:
+            return self.get_object(taskId)
 
     def post(self):
         parser = reqparse.RequestParser()

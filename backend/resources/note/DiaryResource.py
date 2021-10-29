@@ -10,10 +10,22 @@ from utils.TimeUtil import TimeUtil
 
 
 class DiaryResource(Resource):
-    def get(self):
+    def get_list(self):
         repo = DiaryRepo()
         data_list = repo.list_all()
         return JsonEncoder.encode(ResponseModel(data_list))
+
+    def get_obj(self, diary_id):
+        repo = DiaryRepo()
+        stmt = repo.select().where(DiaryModel.id == diary_id)
+        obj = repo.execute(stmt).scalar_one()
+        return JsonEncoder.encode(ResponseModel(obj))
+
+    def get(self, diaryId=None):
+        if diaryId is None:
+            return self.get_list()
+        else:
+            return self.get_obj(diaryId)
 
     def post(self):
         parser = reqparse.RequestParser()

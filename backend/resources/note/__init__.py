@@ -10,5 +10,5 @@ note_bp = Blueprint('noteApi', __name__,
 api = Api(note_bp)
 
 api.add_resource(NoteResource, '/note')
-api.add_resource(TaskResource, '/task')
-api.add_resource(DiaryResource, '/diary')
+api.add_resource(TaskResource, '/task', '/task/<int:taskId>')
+api.add_resource(DiaryResource, '/diary', '/diary/<int:diaryId>')
