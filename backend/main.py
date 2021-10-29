@@ -1,5 +1,5 @@
 from flask import Flask, send_file
-
+from flask import Blueprint
 from resources.note import note_bp
 
 
@@ -14,6 +14,14 @@ def init_app():
     @app.route('/favicon.ico')
     def favicon():
         return send_file('favicon.ico')
+
+    # Blueprint for statics folder
+    static_bp = Blueprint(
+        'statics', __name__,
+        static_folder='statics',
+        static_url_path='/statics'
+    )
+    app.register_blueprint(static_bp)
 
     # Resource
     app.register_blueprint(note_bp, url_prefix="/noteApi")
