@@ -5,9 +5,10 @@ class ResponseModel:
     def __init__(self, data):
         if isinstance(data, list):
             self.count = len(data)
+            self.data = data
         else:
             self.count = 1
-        self.data = data
+            self.data = [data]
 
     @staticmethod
     def __attrs():
