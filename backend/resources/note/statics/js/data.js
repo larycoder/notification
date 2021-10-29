@@ -37,3 +37,25 @@ function convertUrlParamToJson(url) {
     }
     return obj;
 }
+
+
+function getObjectFromResponse(resp, idx) {
+    let data = convertTextToJson(resp);
+    if(!typeof data.count === "number" || data.count < idx + 1) {
+        return {}
+    } else {
+        return data.data[idx];
+    }
+}
+
+
+function convertObjToArray(keys, obj) {
+    let array = [];
+    for(let field of Object.keys(obj)) {
+        let tempObj = {}
+        tempObj[keys[0]] = field;
+        tempObj[keys[1]] = obj[field];
+        array.push(tempObj);
+    }
+    return array;
+}

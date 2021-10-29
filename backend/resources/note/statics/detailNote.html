@@ -4,16 +4,68 @@
     <title>Detail Note</title>
     <script src="js/api.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/render.js"></script>
     <script>
-        let url = window.location.href;
-        let params = convertUrlParamToJson(url);
-        console.log(params);
+        var params;
+        function getObject() {
+            let url = window.location.href;
+            params = convertUrlParamToJson(url);
+
+            url = "/noteApi/";
+            url += params["type"] + "/" + params["id"];
+
+            let data = callSimpleApi("GET", url);
+            return getObjectFromResponse(data, 0);
+        }
+
+        function renderInfo() {
+            let obj = getObject();
+            let notes = document.getElementById("notes_data");
+            let extra = document.getElementById("extra_info");
+
+            // task render
+            if(params.type == "diary") {
+                document.getElementById("task_title").innerHTML = "Activity: ";
+                document.getElementById("task_data").innerHTML = obj.activity;
+                delete obj.activity;
+            } else {
+                document.getElementById("task_title").innerHTML = "Task: ";
+                document.getElementById("task_data").innerHTML = obj.task;
+                delete obj.task;
+            }
+
+            // notes render
+            notes.innerHTML = obj.notes;
+            delete obj.notes;
+
+            // extra info render
+            let dataAsArray = convertObjToArray(["key", "value"], obj);
+            let dataAsRespObj = {
+                "count": dataAsArray.length,
+                "data": dataAsArray
+            }
+            extra.innerHTML = renderJsonAsTable(dataAsRespObj, "extra_info");
+        }
+
     </script>
 </head>
 
 <body>
-    <h2>Note Detail</h2>
-    <div id="task"></div>
-    <div id="notes"></div>
-    <div id="extra_info"></div>
+<h2>Note Detail</h2>
+<div>
+    <div style="float:left">
+        <div id="task">
+            <p>
+                <b id="task_title"></b>
+                <span id="task_data"></span>
+            </p>
+        </div>
+        <div id="notes">
+            <h4>Notes: </h4>
+            <p id="notes_data"></p>
+        </div>
+    </div>
+    <div style="float:right" id="extra_info"></div>
+</div>
+<script>renderInfo();</script>
 </body>
