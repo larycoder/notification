@@ -13,7 +13,11 @@ class DiaryResource(Resource):
     def get_list(self):
         repo = DiaryRepo()
         data_list = repo.list_all()
-        return JsonEncoder.encode(ResponseModel(data_list))
+        resp_data = JsonEncoder.encode(ResponseModel(data_list))
+        # remove notes data
+        for obj in resp_data["data"]:
+            del obj["notes"]
+        return resp_data
 
     def get_obj(self, diary_id):
         repo = DiaryRepo()

@@ -12,7 +12,11 @@ class TaskResource(Resource):
     def get_list(self):
         repo = TaskRepo()
         data_list = repo.list_all()
-        return JsonEncoder.encode(ResponseModel(data_list))
+        resp_data = JsonEncoder.encode(ResponseModel(data_list))
+        # remove notes data
+        for obj in resp_data["data"]:
+            del obj["notes"]
+        return resp_data
 
     def get_object(self, task_id):
         repo = TaskRepo()
