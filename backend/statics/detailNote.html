@@ -41,8 +41,13 @@
             // extra info render
             for(let key of Object.keys(obj)) {
                 let id = "extra_info_value_" + key;
-                let value = obj[key];
-                obj[key] = `<input type="text" id="${id}" value= "${value}">`;
+                let value = "";
+                if(obj[key] === null) {
+                    value = "";
+                } else {
+                    value = `value = "${obj[key]}"`;
+                }
+                obj[key] = `<input type="text" id="${id}" ${value}>`;
             }
 
             let dataAsArray = convertObjToArray(["key", "value"], obj);
@@ -54,7 +59,6 @@
 
             modifyDOMProperties();
         }
-
     </script>
     <script>
         // script to modify DOM properties
