@@ -36,4 +36,5 @@ class NoteModel(BaseModel, ReprModel):
         attr_list = NoteModel.__export_attribute()
         attr_list.remove('id')
         for k in attr_list:
-            self.__dict__[k] = obj.get(k)
+            if k in obj.keys():
+                setattr(self, k, obj.get(k))
