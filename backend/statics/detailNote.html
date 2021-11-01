@@ -39,12 +39,20 @@
             delete obj.notes;
 
             // extra info render
+            for(let key of Object.keys(obj)) {
+                let id = "extra_info_value_" + key;
+                let value = obj[key];
+                obj[key] = `<input type="text" id="${id}" value= "${value}">`;
+            }
+
             let dataAsArray = convertObjToArray(["key", "value"], obj);
             let dataAsRespObj = {
                 "count": dataAsArray.length,
                 "data": dataAsArray
             }
             extra.innerHTML = renderJsonAsTable(dataAsRespObj, "extra_info");
+
+            modifyDOMProperties();
         }
 
     </script>
@@ -54,25 +62,25 @@
             // allow tab in textarea of notes
             document.getElementById('notes_data').addEventListener('keydown', function(e) {
                 if (e.key == 'Tab') {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
+                    e.preventDefault();
+                    let start = this.selectionStart;
+                    let end = this.selectionEnd;
+                    this.value = this.value.substring(0, start + 1) +
+                        "    " + this.value.substring(end + 1);
 
-                // set textarea value to: text before caret + tab + text after caret
-                this.value = this.value.substring(0, start) +
-                  "    " + this.value.substring(end);
-
-                // put caret at right position again
-                this.selectionStart =
-                  this.selectionEnd = start + 1;
-              }
+                    // put caret at right position again
+                    this.selectionStart = this.selectionEnd = start + 4;
+                }
             });
         }
     </script>
 </head>
 
 <body>
-<h2>Note Detail</h2>
+<div>
+    <h2>Note Detail</h2>
+    <button style="margin-bottom: 20px" type="button">Save</button>
+</div>
 <div>
     <div style="float:left">
         <div id="task">
