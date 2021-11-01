@@ -59,3 +59,12 @@ function convertObjToArray(keys, obj) {
     }
     return array;
 }
+
+
+function getValueFromHolder(holder) {
+    if("value" in holder) {
+        return holder.value;
+    } else {
+        return null;
+    }
+}
