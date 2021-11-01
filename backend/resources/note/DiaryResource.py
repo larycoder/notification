@@ -40,12 +40,33 @@ class DiaryResource(Resource):
         parser.add_argument('taskId', type=int)
         args = parser.parse_args()
 
-        args['duration'] = TimeUtil.str_to_second(args['duration'])
+        if args['duration'] is not None:
+            args['duration'] = TimeUtil.str_to_second(args['duration'])
 
         model = DiaryModel()
         model.loadJSON(args)
 
         repo = DiaryRepo()
         repo.add_object(model)
+        repo.commit()
+        return None
+
+    def put(self, diaryId):
+        parser = reqparse.RequestParser()
+        parser.add_argument('activity', required=True, type=str)
+        parser.add_argument('notes', type=str)
+        parser.add_argument('start_time', type=inputs.datetime_from_iso8601)
+        parser.add_argument('duration', type=str)
+        parser.add_argument('taskId', type=int)
+        args = parser.parse_args()
+
+        if args['duration'] is not None:
+            args['duration'] = TimeUtil.str_to_second(args['duration'])
+        args = {k:v for k, v in args.items() if v is not None}
+
+        repo = DiaryRepo()
+        stmt = repo.select().where(DiaryModel.id == diaryId)
+        model = repo.execute(stmt).scalar_one()
+        model.loadJSON(args)
         repo.commit()
         return None

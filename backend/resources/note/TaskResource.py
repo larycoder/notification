@@ -50,3 +50,24 @@ class TaskResource(Resource):
         repo.add_object(model)
         repo.commit()
         return None
+
+    def put(self, taskId):
+        parser = reqparse.RequestParser()
+        parser.add_argument('task', type=str)
+        parser.add_argument('parentId', type=int)
+        parser.add_argument('notes', type=str)
+        parser.add_argument('label', type=str)
+        parser.add_argument('priority', type=str)
+        parser.add_argument('deadline', type=inputs.datetime_from_iso8601)
+        parser.add_argument('measurement', type=str)
+        parser.add_argument('process', type=float)
+
+        args = parser.parse_args()
+        args = {k:v for k, v in args.items() if v is not None}
+
+        repo = TaskRepo()
+        stmt = repo.select().where(TaskModel.id == taskId)
+        model = repo.execute(stmt).scalar_one()
+        model.loadJSON(args)
+        repo.commit()
+        return None
