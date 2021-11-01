@@ -6,6 +6,7 @@
     <script src="js/data.js"></script>
     <script src="js/render.js"></script>
     <script>
+        // table information script
         function createInfoTable() {
             let opt = document.getElementById("log_opt_type").value;
             let data = callSimpleApi("GET", "/noteApi/" + opt);
@@ -32,6 +33,44 @@
             addDetailNotePageToTable();
         }
     </script>
+    <script>
+        // new note dialog script
+        function renderInputTag(field, posId) {
+            text = ""
+            if(field == "notes") {
+                text += `<textarea id="${posId}_${field}">`;
+                text += `</textarea>`;
+            } else {
+                text += `<input `;
+                text += `id = "${posId}_${field}" type="text" name="${field}"`;
+                text += `>`;
+            }
+            return text;
+        }
+
+        function getFieldsByType(type) {
+            if(type == "task") {
+                return [
+                    "task", "parentId", "notes", "label",
+                    "priority", "deadline", "measurement", "process"
+                ];
+            } else {
+                return [
+                    "activity", "notes", "start_time", "duration", "taskId"
+                ]
+            }
+        }
+
+        function toggleBox() {
+            let opt = document.getElementById("log_opt_type").value;
+            let fields = getFieldsByType(opt);
+
+            let box = document.getElementById("new_note_box");
+            let boxData = renderInputBox(fields, renderInputTag);
+            box.innerHTML = boxData;
+            box.style.display = "block";
+        }
+    </script>
 </head>
 
 <body>
@@ -43,6 +82,8 @@
             <option value="diary">diary</option>
         </select>
         <button type="button" onclick="showInfoTable()">Submit</button>
+        <button type="button" onclick="toggleBox()">New</button>
     </div>
+    <div style="display:none" id="new_note_box"></div>
     <div id="info"></div>
 </body>

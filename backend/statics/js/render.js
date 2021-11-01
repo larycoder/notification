@@ -43,3 +43,17 @@ function addColToTable(table, name, values) {
         idx += 1;
     }
 }
+
+
+// inputBoxFunc used to detect input tag for each field
+function renderInputBox(fields, inputBoxFunc, posId) {
+    let box = "";
+    for(let field of fields) {
+        let id = posId + "_" + field;
+        let labelId = id + "_title";
+        let label = `<label for="${id}" id="${labelId}">${field}: </label>`;
+        let input = inputBoxFunc(field, posId);
+        box += `${label} ${input} <br>`;
+    }
+    return box;
+}
