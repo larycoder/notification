@@ -7,12 +7,15 @@
     <script src="js/render.js"></script>
     <script>
         var params;
+        var fields;
+        var objUrl;
         function getObject() {
             let url = window.location.href;
             params = convertUrlParamToJson(url);
 
             url = "/noteApi/";
             url += params["type"] + "/" + params["id"];
+            objUrl = url;
 
             let data = callSimpleApi("GET", url);
             return getObjectFromResponse(data, 0);
@@ -39,6 +42,7 @@
             delete obj.notes;
 
             // extra info render
+            fields = Object.keys(obj);
             for(let key of Object.keys(obj)) {
                 let id = "extra_info_value_" + key;
                 let value = "";
@@ -58,6 +62,29 @@
             extra.innerHTML = renderJsonAsTable(dataAsRespObj, "extra_info");
 
             modifyDOMProperties();
+        }
+
+        function saveNote() {
+            let payload = {};
+
+            // task
+            if(params.type == "diary") {
+                payload.activity = document.getElementById("task_data").innerHTML;
+            } else {
+                payload.task = document.getElementById("task_data").value;
+            }
+
+            // notes
+            payload.notes = document.getElementById("notes_data").innerHTML;
+
+            // extra fields
+            for(let field of fields) {
+                payload[field] = document.getElementById("extra_info_value_" + field).value;
+            }
+
+            // submit payload
+            let resp = callSimpleApi("PUT", objUrl, JSON.stringify(payload));
+            console.log(resp);
         }
     </script>
     <script>
@@ -83,7 +110,7 @@
 <body>
 <div>
     <h2>Note Detail</h2>
-    <button style="margin-bottom: 20px" type="button">Save</button>
+    <button style="margin-bottom: 20px" type="button" onclick="saveNote()">Save</button>
 </div>
 <div>
     <div style="float:left">
