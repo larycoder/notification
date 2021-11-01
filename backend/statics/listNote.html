@@ -61,14 +61,33 @@
             }
         }
 
-        function toggleBox() {
+        function createBox() {
             let opt = document.getElementById("log_opt_type").value;
             let fields = getFieldsByType(opt);
 
             let box = document.getElementById("new_note_box");
-            let boxData = renderInputBox(fields, renderInputTag);
+            let boxBorder = document.getElementById("new_note");
+            let boxData = renderInputBox(fields, renderInputTag, "new_note_box");
             box.innerHTML = boxData;
-            box.style.display = "block";
+            boxBorder.style.display = "block";
+        }
+
+        function cancelBox() {
+            document.getElementById("new_note_box").innerHTML = "";
+            document.getElementById("new_note").style.display = "none";
+        }
+
+        function addNewNote() {
+            let opt = document.getElementById("log_opt_type").value;
+            let fields = getFieldsByType(opt);
+
+            let payload = {};
+            for(field of fields) {
+                let holder = document.getElementById("new_note_box_" + field);
+                let value = getValueFromHolder(holder);
+                payload[field] = value;
+            }
+            console.log(payload);
         }
     </script>
 </head>
@@ -82,8 +101,14 @@
             <option value="diary">diary</option>
         </select>
         <button type="button" onclick="showInfoTable()">Submit</button>
-        <button type="button" onclick="toggleBox()">New</button>
+        <button type="button" onclick="createBox()">New</button>
     </div>
-    <div style="display:none" id="new_note_box"></div>
+    <div style="display:none" id="new_note">
+        <div id="new_note_box"></div>
+        <div id="new_note_button">
+            <button type="button" onclick="addNewNote()">Add</button>
+            <button type="button" onclick="cancelBox()">Cancel</button>
+        </div>
+    </div>
     <div id="info"></div>
 </body>
