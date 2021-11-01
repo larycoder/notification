@@ -93,11 +93,6 @@
             for(field of fields) {
                 let holder = document.getElementById("new_note_box_" + field);
                 let value = getValueFromHolder(holder);
-
-                // clean and build payload
-                if(field == "parentId") {
-                    value = Number(value);
-                }
                 if(value) payload[field] = value;
             }
 
