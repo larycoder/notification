@@ -75,11 +75,12 @@
             }
 
             // notes
-            payload.notes = document.getElementById("notes_data").innerHTML;
+            payload.notes = document.getElementById("notes_data").value;
 
             // extra fields
             for(let field of fields) {
-                payload[field] = document.getElementById("extra_info_value_" + field).value;
+                let data = document.getElementById("extra_info_value_" + field).value;
+                if(data) payload[field] = data;
             }
 
             // submit payload
