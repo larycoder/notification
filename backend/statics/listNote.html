@@ -40,9 +40,15 @@
             if(field == "notes") {
                 text += `<textarea id="${posId}_${field}">`;
                 text += `</textarea>`;
+            } else if(field == "parentId") {
+                text += `<input `;
+                let type = "number";
+                text += `id = "${posId}_${field}" type="${type}" name="${field}"`;
+                text += `>`;
             } else {
                 text += `<input `;
-                text += `id = "${posId}_${field}" type="text" name="${field}"`;
+                let type = "text";
+                text += `id = "${posId}_${field}" type="${type}" name="${field}"`;
                 text += `>`;
             }
             return text;
@@ -70,6 +76,8 @@
             let boxData = renderInputBox(fields, renderInputTag, "new_note_box");
             box.innerHTML = boxData;
             boxBorder.style.display = "block";
+
+            modifyDOMProperties();
         }
 
         function cancelBox() {
@@ -85,9 +93,39 @@
             for(field of fields) {
                 let holder = document.getElementById("new_note_box_" + field);
                 let value = getValueFromHolder(holder);
-                payload[field] = value;
+
+                // clean and build payload
+                if(field == "parentId") {
+                    value = Number(value);
+                }
+                if(value) payload[field] = value;
             }
-            console.log(payload);
+
+            let url = "/noteApi/" + opt;
+            let payloadString = JSON.stringify(payload);
+            console.log(callSimpleApi("POST", url, payloadString));
+        }
+    </script>
+    <script>
+        // modify default properties of DOM
+
+        function modifyDOMProperties() {
+            // allow tab in textarea of notes
+            document.getElementById('new_note_box_notes').addEventListener('keydown', function(e) {
+                if (e.key == 'Tab') {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+
+                // set textarea value to: text before caret + tab + text after caret
+                this.value = this.value.substring(0, start) +
+                  "    " + this.value.substring(end);
+
+                // put caret at right position again
+                this.selectionStart =
+                  this.selectionEnd = start + 1;
+              }
+            });
         }
     </script>
 </head>
