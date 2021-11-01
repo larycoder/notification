@@ -26,11 +26,11 @@
             // task render
             if(params.type == "diary") {
                 document.getElementById("task_title").innerHTML = "Activity: ";
-                document.getElementById("task_data").innerHTML = obj.activity;
+                document.getElementById("task_data").value = obj.activity;
                 delete obj.activity;
             } else {
                 document.getElementById("task_title").innerHTML = "Task: ";
-                document.getElementById("task_data").innerHTML = obj.task;
+                document.getElementById("task_data").value = obj.task;
                 delete obj.task;
             }
 
@@ -48,6 +48,27 @@
         }
 
     </script>
+    <script>
+        // script to modify DOM properties
+        function modifyDOMProperties() {
+            // allow tab in textarea of notes
+            document.getElementById('notes_data').addEventListener('keydown', function(e) {
+                if (e.key == 'Tab') {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+
+                // set textarea value to: text before caret + tab + text after caret
+                this.value = this.value.substring(0, start) +
+                  "    " + this.value.substring(end);
+
+                // put caret at right position again
+                this.selectionStart =
+                  this.selectionEnd = start + 1;
+              }
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -55,14 +76,12 @@
 <div>
     <div style="float:left">
         <div id="task">
-            <p>
-                <b id="task_title"></b>
-                <span id="task_data"></span>
-            </p>
+            <label for="task_data" id="task_title"></label>
+            <input style="width:58vw" id="task_data">
         </div>
         <div id="notes">
             <h4>Notes: </h4>
-            <p id="notes_data"></p>
+            <textarea id="notes_data" style="width: 60vw; height: 70vh;"></textarea>
         </div>
     </div>
     <div style="float:right" id="extra_info"></div>
