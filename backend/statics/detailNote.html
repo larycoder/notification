@@ -86,6 +86,7 @@
             // submit payload
             let resp = callSimpleApi("PUT", objUrl, JSON.stringify(payload));
             console.log(resp);
+            renderDebugText(resp, "debug_log_box", 1000);
         }
     </script>
     <script>
@@ -109,6 +110,9 @@
 </head>
 
 <body>
+<div>
+    <p id="debug_log_box" style="background-color: #EFA9A9"></p>
+</div>
 <div>
     <h2>Note Detail</h2>
     <button style="margin-bottom: 20px" type="button" onclick="saveNote()">Save</button>

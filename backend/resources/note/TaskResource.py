@@ -71,3 +71,11 @@ class TaskResource(Resource):
         model.loadJSON(args)
         repo.commit()
         return None
+
+    def delete(self, taskId):
+        repo = TaskRepo()
+        stmt = repo.select().where(TaskModel.id == taskId)
+        model = repo.execute(stmt).scalar_one()
+        repo.delete_object(model)
+        repo.commit()
+        return None

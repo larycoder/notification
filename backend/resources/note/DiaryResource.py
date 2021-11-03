@@ -70,3 +70,11 @@ class DiaryResource(Resource):
         model.loadJSON(args)
         repo.commit()
         return None
+
+    def delete(self, diaryId):
+        repo = DiaryRepo()
+        stmt = repo.select().where(DiaryModel.id == diaryId)
+        model = repo.execute(stmt).scalar_one()
+        repo.delete_object(model)
+        repo.commit()
+        return None
