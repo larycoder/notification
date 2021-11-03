@@ -38,7 +38,6 @@ function addColToTable(table, name, values) {
     head.innerHTML += "<th>" + name + "</th>";
     let idx = 0;
     for(let row of rows) {
-        console.log(values[idx]);
         row.innerHTML += "<td>" + values[idx] + "</td>";
         idx += 1;
     }
