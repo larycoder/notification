@@ -20,7 +20,7 @@
             let opt = document.getElementById("log_opt_type").value;
 
             let linkValues = [];
-            for(id of idValues) {
+            for(let id of idValues) {
                 let link = "detailNote.html?id=" + id + "&type=" + opt;
                 let tag = "<a href = \"" + link + "\">ref</a>";
                 linkValues.push(tag);
@@ -28,9 +28,32 @@
             addColToTable(table, "detail", linkValues);
         }
 
+        function deleteNote(type, id) {
+            let url = "/noteApi/" + type + "/" + id;
+            let resp = callSimpleApi("DELETE", url);
+            console.log(resp);
+            showInfoTable();
+        }
+
+        function addDeleteButtonToTable() {
+            let table = document.getElementById("info_table");
+            let idValues = getColumnValuesOfTable(table, "id");
+            let opt = document.getElementById("log_opt_type").value;
+
+            let buttonList = [];
+            for(let id of idValues) {
+                let button = "<button type = \"button\" onclick=";
+                button += "\"deleteNote('" + opt + "'," + id + ")\">";
+                button += "delete </button>";
+                buttonList.push(button);
+            }
+            addColToTable(table, "delete", buttonList);
+        }
+
         function showInfoTable() {
             createInfoTable();
             addDetailNotePageToTable();
+            addDeleteButtonToTable();
         }
     </script>
     <script>
@@ -98,7 +121,9 @@
 
             let url = "/noteApi/" + opt;
             let payloadString = JSON.stringify(payload);
-            console.log(callSimpleApi("POST", url, payloadString));
+            let resp = callSimpleApi("POST", url, payloadString);
+            console.log(resp);
+            renderDebugText(resp, "debug_log_box", 1000);
         }
     </script>
     <script>
@@ -123,6 +148,9 @@
 </head>
 
 <body>
+    <div id="debug_log">
+        <p style="background-color: #EFA9A9" id="debug_log_box"></p>
+    </div>
     <h2>Dashboard</h2>
     <div id="log_opt">
         <label for="log_opt_type">Log Type:</label>

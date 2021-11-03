@@ -56,3 +56,16 @@ function renderInputBox(fields, inputBoxFunc, posId) {
     }
     return box;
 }
+
+
+function renderDebugText(debugText, posId, timeout) {
+    let text = "";
+    let today = new Date();
+    text = `[${today}] ${debugText}`;
+    let holder = document.getElementById(posId)
+    holder.innerHTML = text;
+    holder.style.display = "block";
+    setTimeout(function(){
+        document.getElementById(posId).style.display = "none";
+    }, timeout);
+}
