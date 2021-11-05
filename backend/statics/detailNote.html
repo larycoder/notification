@@ -96,9 +96,10 @@
     </script>
     <script>
         // script to modify DOM properties
+        var keyPressArray = [];
         function modifyDOMProperties() {
-            // allow tab in textarea of notes
             document.getElementById('notes_data').addEventListener('keydown', function(e) {
+                // allow tab in textarea of notes
                 if (e.key == 'Tab') {
                     e.preventDefault();
                     let start = this.selectionStart;
@@ -108,6 +109,22 @@
 
                     // put caret at right position again
                     this.selectionStart = this.selectionEnd = start + 4;
+
+                // allow save by Crtl + s
+                } else if (e.key == 's' && keyPressArray.indexOf("Control") > -1) {
+                    e.preventDefault();
+                    saveNote();
+                }
+
+                // track key press
+                if(keyPressArray.indexOf(e.key) == -1) {
+                    keyPressArray.push(e.key);
+                }
+            });
+            document.getElementById('notes_data').addEventListener('keyup', function(e) {
+                let kIdx = keyPressArray.indexOf(e.key);
+                if(kIdx > -1) {
+                    keyPressArray.splice(kIdx, 1);
                 }
             });
         }
