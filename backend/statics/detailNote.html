@@ -66,6 +66,7 @@
 
         function saveNote() {
             let payload = {};
+            let saveOpt = document.getElementById("save_opt").value;
 
             // task
             if(params.type == "diary") {
@@ -80,7 +81,10 @@
             // extra fields
             for(let field of fields) {
                 let data = document.getElementById("extra_info_value_" + field).value;
-                if(data) payload[field] = data;
+                if(data || saveOpt == "all") {
+                    if(! data) data = null;
+                    payload[field] = data;
+                }
             }
 
             // submit payload
@@ -116,6 +120,10 @@
 <div>
     <h2>Note Detail</h2>
     <button style="margin-bottom: 20px" type="button" onclick="saveNote()">Save</button>
+    <select id="save_opt">
+        <option value="value" selected>value</option>
+        <option value="all">all</option>
+    </select>
 </div>
 <div>
     <div style="float:left">
