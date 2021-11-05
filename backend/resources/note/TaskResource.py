@@ -54,16 +54,14 @@ class TaskResource(Resource):
     def put(self, taskId):
         parser = reqparse.RequestParser()
         parser.add_argument('task', type=str)
-        parser.add_argument('parentId', type=int)
-        parser.add_argument('notes', type=str)
-        parser.add_argument('label', type=str)
-        parser.add_argument('priority', type=str)
-        parser.add_argument('deadline', type=inputs.datetime_from_iso8601)
-        parser.add_argument('measurement', type=str)
-        parser.add_argument('process', type=float)
-
+        parser.add_argument('parentId', type=int, store_missing=False)
+        parser.add_argument('notes', type=str, store_missing=False)
+        parser.add_argument('label', type=str, store_missing=False)
+        parser.add_argument('priority', type=str, store_missing=False)
+        parser.add_argument('deadline', type=inputs.datetime_from_iso8601, store_missing=False)
+        parser.add_argument('measurement', type=str, store_missing=False)
+        parser.add_argument('process', type=float, store_missing=False)
         args = parser.parse_args()
-        args = {k:v for k, v in args.items() if v is not None}
 
         repo = TaskRepo()
         stmt = repo.select().where(TaskModel.id == taskId)

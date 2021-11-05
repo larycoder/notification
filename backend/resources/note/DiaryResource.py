@@ -54,15 +54,14 @@ class DiaryResource(Resource):
     def put(self, diaryId):
         parser = reqparse.RequestParser()
         parser.add_argument('activity', required=True, type=str)
-        parser.add_argument('notes', type=str)
-        parser.add_argument('start_time', type=inputs.datetime_from_iso8601)
-        parser.add_argument('duration', type=str)
-        parser.add_argument('taskId', type=int)
+        parser.add_argument('notes', type=str, store_missing=False)
+        parser.add_argument('start_time', type=inputs.datetime_from_iso8601, store_missing=False)
+        parser.add_argument('duration', type=str, store_missing=False)
+        parser.add_argument('taskId', type=int, store_missing=False)
         args = parser.parse_args()
 
         if args['duration'] is not None:
             args['duration'] = TimeUtil.str_to_second(args['duration'])
-        args = {k:v for k, v in args.items() if v is not None}
 
         repo = DiaryRepo()
         stmt = repo.select().where(DiaryModel.id == diaryId)
