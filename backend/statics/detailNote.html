@@ -71,7 +71,7 @@
 
             // task
             if(params.type == "diary") {
-                payload.activity = document.getElementById("task_data").innerHTML;
+                payload.activity = document.getElementById("task_data").value;
             } else {
                 payload.task = document.getElementById("task_data").value;
             }
