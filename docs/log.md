@@ -6,3 +6,8 @@
 - Support write note
 - Support modify note
 - Support delete note
+
+-- 2021-11-05 -- (update)
+
+- Support query notes
+- Support notes visualization
