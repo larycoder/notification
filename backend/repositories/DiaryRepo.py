@@ -1,3 +1,4 @@
+from sqlalchemy import desc
 from models.DiaryModel import DiaryModel
 from repositories import BaseRepo
 
@@ -7,7 +8,7 @@ class DiaryRepo(BaseRepo):
         super().__init__(DiaryModel)
 
     def list_all(self):
-        stmt = self.select()
+        stmt = self.select().order_by(desc(self.model.id))
         result = self.execute(stmt)
         list_obj = []
         for row in result:
