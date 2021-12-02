@@ -20,6 +20,6 @@ card, **Delete** or **Search** from card list.
 2. **Detail**: used to view detail of single card. User can **Modify** detail and
 **Save** back to storage.
 
-3. Server: used to connect and interact with back-end. User can **Pull** card
+3. **Server**: used to connect and interact with back-end. User can **Pull** card
 from server to local storage, **push** new or updated card to server and
 **Delete** exited card on server.
