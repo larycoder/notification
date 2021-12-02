@@ -1,3 +1,6 @@
-# Building skeleton
+# First step
 
-- Design App View for Android
+Priority on web design
+
+- Build use-case diagram
+- Design web views
