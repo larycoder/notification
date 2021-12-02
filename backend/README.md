@@ -12,3 +12,7 @@ Since the program will be lite and fast, I will define some contains in here:
     - Service/Service: function call
     - Service/DB: ORM
 6. Security: In service layer + binding variable
+
+# Minimum requirement
+
+- Python 3.6
