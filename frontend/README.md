@@ -10,4 +10,5 @@ Supporting:
 # Main app directory
 
 Flutter project: [link](./notification)
+
 Dart code: [link](./notification/lib)
