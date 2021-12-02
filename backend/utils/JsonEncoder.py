@@ -7,7 +7,7 @@ class JsonEncoder:
     # object must include:
     # toJSON method
     @staticmethod
-    def encode(obj):
+    def encode(obj) -> dict:
         if isinstance(obj, list):
             result = []
             for v in obj:
