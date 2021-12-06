@@ -1,5 +1,6 @@
 # Notification
-This project is aimed at developing a time-indexing notebooks for time-management purpose
+This project is aimed at developing a time-indexing notebooks for time-management
+purpose
 
 
 ## Starting point on time management
@@ -10,13 +11,29 @@ This project is aimed at developing a time-indexing notebooks for time-managemen
 - If time management works as milestone, then it can hold info of a month, a week and a day.
 - Actually, it can be archived after amount of time with unit of day.
 - Time management start with topic + description + notes.
-- I need somewhere to note down sth and look back it in time. Searching engine will be core of system.
+- I need somewhere to note down something and look back it in time. Searching engine will be core of system.
 - So the main idea is notes and look back.
 - Leverage technology is pretty good option. -> notification project could be stand stone.
 
 ## Technique view
 The project follows email style since it is my first imagination on how this system would effectively work.
 Look on [docs/log.md](docs/log.md)
+
+## Docs tree
+
+This project is a bit messy since I update it through time. Because the project
+is split into 2 part: back-end and front-end, the docs will be spread to
+different sub-directory. Hence, for better docs tracking, I link docs into a
+tree. Below table present starting point for each docs:
+
+| path | brief-description |
+|:-----|:------------------|
+| [docs](docs) | my vision on future of whole system |
+| [backend/docs](backend/docs) | back-end design docs |
+| [frontend/docs](frontend/docs) | front-end design docs |
+
+Beside of docs, considering README (if exited) also, I could note something
+important in there.
 
 ## License notice
 This program is released under license GNU.
