@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'intro_view.dart';
+
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -54,6 +56,7 @@ class HomeView extends StatelessWidget {
         )),
         body: Stack(
           children: [
+            const IntroView(),
             Center(child: _mainButtonFragment(context)),
           ],
         ));

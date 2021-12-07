@@ -1,0 +1,18 @@
+Hello guy !
+
+Firstly, I want to welcome you to visit and use my app.
+
+This is a time management app that designed to control daily activity through
+list of cards. You will have
+2 options: Diary and Task. Diary cards is designed allowing you to write down
+your daily activity including start time and duration. On the other hand, Task
+cards is more simpler and you can use it to write down your long-term activity
+and event note down your plan in there. It supports deadline and task measurement
+also. Then depending on your effort of updating the card, the app calculate and
+provide you a report about your activities (coming soon). The app has a back-end
+system that help you to store your card so that your app does not need to
+perform any heavy task on its side but requiring you to lunch back-end yourself
+for now.
+
+This app is designed by a back-end developer so do not expected too much on its
+art.
