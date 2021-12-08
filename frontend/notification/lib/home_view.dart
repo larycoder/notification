@@ -17,11 +17,17 @@ class HomeView extends StatelessWidget {
         children: [
           ElevatedButton(
             child: const Text('Diary'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/dashboard',
+                  arguments: 'diary');
+            },
           ),
           ElevatedButton(
             child: const Text('Task'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/dashboard',
+                  arguments: 'task');
+            },
           ),
         ],
       ),
