@@ -26,7 +26,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       created_time: fields[6] as DateTime?,
       deadline: fields[7] as DateTime?,
       measurement: fields[8] as String?,
-      process: fields[9] as String?,
+      process: fields[9] as double?,
     );
   }
 

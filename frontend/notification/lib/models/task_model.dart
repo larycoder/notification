@@ -34,7 +34,7 @@ class TaskModel {
   String? measurement;
 
   @HiveField(9)
-  String? process;
+  double? process;
 
   TaskModel({
     this.id,
