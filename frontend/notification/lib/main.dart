@@ -9,6 +9,7 @@ void main() async {
   runApp(
     MaterialApp(
       title: 'Notification App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {

@@ -13,13 +13,14 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   String? noteType;
+  bool showAddFrag = false;
 
   Widget _noteListFragment(BuildContext context) {
     // replace with repository class
     final TaskModel task = TaskModel(task: "Flutter", notes: "Test");
     final DiaryModel diary = DiaryModel(activity: "Flutter", notes: "Test");
     final items = List<NoteView>.generate(
-      100,
+      10,
       (i) {
         return (noteType == "diary")
             ? DiaryNote(data: diary)
@@ -40,12 +41,31 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
+  Widget _noteAddFragment(BuildContext context) {
+    return const Text("TK");
+  }
+
   @override
   Widget build(BuildContext context) {
     noteType = ModalRoute.of(context)!.settings.arguments as String? ?? "diary";
     return Scaffold(
-      appBar: AppBar(title: Text("Dashboard $noteType")),
-      body: _noteListFragment(context),
+      appBar: AppBar(
+        title: Text("Dashboard $noteType"),
+        actions: [
+          IconButton(
+            onPressed: () => setState(() {
+              showAddFrag = !showAddFrag;
+            }),
+            icon: Icon(showAddFrag ? Icons.close : Icons.add),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(child: _noteListFragment(context)),
+          showAddFrag ? _noteAddFragment(context) : const SizedBox(),
+        ],
+      ),
     );
   }
 }
