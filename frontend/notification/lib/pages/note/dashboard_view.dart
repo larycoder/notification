@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notification/models/diary_model.dart';
 import 'package:notification/models/task_model.dart';
 
 import 'note_view.dart';
@@ -15,10 +16,15 @@ class _DashboardViewState extends State<DashboardView> {
 
   Widget _noteListFragment(BuildContext context) {
     // replace with repository class
-    final TaskModel data = TaskModel(task: "Flutter", notes: "Test");
-    final items = List<TaskNote>.generate(
+    final TaskModel task = TaskModel(task: "Flutter", notes: "Test");
+    final DiaryModel diary = DiaryModel(activity: "Flutter", notes: "Test");
+    final items = List<NoteView>.generate(
       100,
-      (i) => TaskNote(data: data),
+      (i) {
+        return (noteType == "diary")
+            ? DiaryNote(data: diary)
+            : TaskNote(data: task);
+      },
     );
     return Card(
       color: Colors.grey[300],
