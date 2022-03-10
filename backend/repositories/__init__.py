@@ -2,12 +2,15 @@
 from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
 from db.engine import engine
+from flask import g
 
 
 class BaseRepo():
+
     def __init__(self, model):
         self.model = model
-        self.session = Session(engine)
+        g._sqlite = getattr(g, "_sqlite", Session(engine))
+        self.session = g._sqlite
 
     def insert(self, **kwargs):
         return insert(self.model).values(kwargs)
@@ -17,11 +20,17 @@ class BaseRepo():
 
     # Core expression
     def execute_many(self, stmt_list: list) -> list:
+        db_type = self.session.bind.dialect.name
         result_list = []
-        with self.session.begin():
+        if db_type == "sqlite": # sqlite is always a transaction
             for stmt in stmt_list:
                 result = self.session.execute(stmt)
                 result_list.append(result)
+        else: # need set query on transaction
+            with self.session.begin():
+                for stmt in stmt_list:
+                    result = self.session.execute(stmt)
+                    result_list.append(result)
         return result_list
 
     def execute(self, stmt):
@@ -31,8 +40,8 @@ class BaseRepo():
     # ORM expression
     def check_object(self, model):
         if not isinstance(model, self.model):
-            self.session.close()
-            raise Exception(f'Wrong Model: expecting {self.model} received {type(model)}')
+            raise Exception(
+                f'Wrong Model: expecting {self.model} received {type(model)}')
 
     def add_object(self, model):
         self.check_object(model)
