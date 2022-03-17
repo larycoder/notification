@@ -12,12 +12,6 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  Widget cardFragment(String type, String title) {
-    return ListTile(
-      leading: const Icon(Icons.atm),
-      title: Text(title),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +34,7 @@ class _DashboardViewState extends State<DashboardView> {
           child: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: const Icon(Icons.api),
-            title: Text(tasks.get(index).task!),
-          );
+          return TaskCard(tasks.get(index), index);
         },
       )),
     ]);
