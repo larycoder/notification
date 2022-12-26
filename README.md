@@ -35,5 +35,17 @@ tree. Below table present starting point for each docs:
 Beside of docs, considering README (if exited) also, I could note something
 important in there.
 
+## Important Update (2022-12-26)
+
+It's long time since the last time I update this project. I have some experience
+on management note. Although not yet have time, so I only update the philosophy
+to the project. I will back to the project when gaining more free time.
+
+**Philosophy**
+
+The file system base is good enough to manage notes. It only need to have a
+better friendly, interactive, shortcut and automatic interface. And do not try
+to build generic interface, do specific one for specific device type.
+
 ## License notice
 This program is released under license GNU.
