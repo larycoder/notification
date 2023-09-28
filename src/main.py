@@ -1,7 +1,7 @@
 from application import app
 
-# sql engine
-import sql_db as sql
+# application routes
+import routes
 
 if __name__ == "__main__":
     debug = True
