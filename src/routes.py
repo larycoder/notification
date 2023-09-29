@@ -35,6 +35,23 @@ def route_notes_del():
         return "Fail", 500
 
 
+@app.route("/api/note/<id>", methods=["GET"])
+def route_note_get(id):
+    note = db.Note.query.filter_by(id=id).first()
+    if note is None:
+        return "Fail", 404
+    return (
+        jsonify(
+            {
+                "id": note.id,
+                "subject": note.subject,
+                "content": note.content,
+            }
+        ),
+        200,
+    )
+
+
 @app.route("/api/note", methods=["POST"])
 def route_note_add():
     note_dict = request.get_json()
@@ -42,9 +59,35 @@ def route_note_add():
     db.db.session.add(note)
     db.db.session.commit()
     note_persist = db.Note.query.filter_by(id=note.id).first()
-    note_dict = {
-        "id": note_persist.id,
-        "subject": note_persist.subject,
-        "content": note_persist.content,
-    }
-    return jsonify(note_dict), 200
+    return jsonify({"note_id": note_persist.id}), 200
+
+
+@app.route("/api/note/<id>", methods=["DELETE"])
+def route_note_del(id):
+    try:
+        note = db.Note.query.filter_by(id=id).first()
+        if note is None:
+            return "Fail", 404
+        db.db.session.delete(note)
+        db.db.session.commit()
+        return jsonify({"del_id": note.id}), 200
+    except Exception as e:
+        print(f"[DEBUG] error: {e}")
+        db.db.session.rollback()
+        return "Fail", 500
+
+
+@app.route("/api/note/<id>", methods=["PATCH"])
+def route_note_patch(id):
+    try:
+        note = db.Note.query.filter_by(id=id).first()
+        if note is None:
+            return "Fail", 404
+        for k, v in request.get_json().items():
+            setattr(note, k, v)
+        db.db.session.commit()
+        return jsonify({"patched_id": note.id}), 200
+    except Exception as e:
+        print(f"[DEBUG] error: {e}")
+        db.db.session.rollback()
+        return "Fail", 500
