@@ -11,7 +11,7 @@ async function fetch_notes_list() {
 
 async function fetch_notes_del() {
   let resp = await fetch("/api/notes", {
-    "method": "DEL"
+    "method": "DELETE"
   });
   return resp.json();
 }
@@ -76,8 +76,10 @@ async function dom_actions_add_onclick() {
   $("#action-notes-refresh").click(() => {
 
   });
-  $("#action-notes-delete").click(() => {
-
+  $("#action-notes-delete").click(async () => {
+    await fetch_notes_del();
+    $("#note-table")[0].innerHTML = '';
+    dom_notes_table_make();
   });
   $("#action-note-add").click(() => {
     $("#note-readonly")[0].style.display = "none";
