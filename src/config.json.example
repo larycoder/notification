@@ -1,4 +1,1 @@
-{
-    "note": "change file name to config.json for enable configure",
-    "db": {"connection": "protocol://user:password@host:port/db_name"}
-}
+
