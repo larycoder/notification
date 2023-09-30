@@ -6,14 +6,14 @@ async function fetch_notes_list() {
   let resp = await fetch("/api/notes", {
     "method": "GET"
   });
-  return await resp.json();
+  return resp.json();
 }
 
 async function fetch_notes_del() {
   let resp = await fetch("/api/notes", {
     "method": "DEL"
   });
-  return await resp.json();
+  return resp.json();
 }
 
 async function fetch_note_add(item) {
@@ -24,7 +24,7 @@ async function fetch_note_add(item) {
     },
     "body": JSON.stringify(item)
   });
-  return await resp.json();
+  return resp.json();
 }
 
 /*
@@ -32,7 +32,7 @@ async function fetch_note_add(item) {
  * */
 
 async function dom_notes_table_make() {
-  var fields = ["id", "subject"];
+  var fields = ["id", "subject", "action"];
   let table = $("#note-table")[0];
 
   /* header */
@@ -56,7 +56,7 @@ async function dom_notes_table_make() {
         let row_hdr = document.createElement("th");
         row_hdr.setAttribute("scope", "row");
         row_hdr.innerText = note.id;
-        row.appendChild(table_hdr);
+        row.appendChild(row_hdr);
       } else {
         let row_dat = document.createElement("td");
         row_dat.innerText = note[field];
