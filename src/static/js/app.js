@@ -56,13 +56,33 @@ async function fetch_note_patch(note_id, item) {
  * DOM modification functions
  * */
 
+/*
+ * dom_note_content_toggle - trigger note content card based on action
+ * action could be: "close", "readonly", "rw"
+ */
+async function dom_note_content_toggle(action) {
+  if (action == "close") {
+    $("#note-header")[0].style.display = "none";
+    $("#note-readonly")[0].style.display = "none";
+    $("#note-rw")[0].style.display = "none";
+  } else {
+    $("#note-header")[0].style.display = "block";
+    if (action == "readonly") {
+      $("#note-readonly")[0].style.display = "block";
+      $("#note-rw")[0].style.display = "none";
+    } else if (action == "rw") {
+      $("#note-readonly")[0].style.display = "none";
+      $("#note-rw")[0].style.display = "block";
+    }
+  }
+}
+
 async function dom_note_view_make(note_id) {
   let note = await fetch_note_get(note_id);
   $("#note-subject-readonly")[0].value = note.subject;
+  $("#note-readonly-edit")[0].setAttribute("data-note-id", note_id);
   tinyMCE.get("note-editor-readonly").setContent(note.content);
-  $("#note-rw")[0].style.display = "none";
-  $("#note-readonly")[0].style.display = "block";
-  $("#note-header")[0].style.display = "block";
+  dom_note_content_toggle("readonly");
 }
 
 async function dom_note_edit_make(note_id) {
@@ -70,9 +90,7 @@ async function dom_note_edit_make(note_id) {
   $("#note-subject")[0].value = note.subject;
   tinyMCE.get("note-editor").setContent(note.content);
   $("#note-rw-save")[0].setAttribute("data-note-id", note_id);
-  $("#note-readonly")[0].style.display = "none";
-  $("#note-header")[0].style.display = "block";
-  $("#note-rw")[0].style.display = "block";
+  dom_note_content_toggle("rw");
 }
 
 async function dom_note_del(note_id) {
@@ -143,21 +161,24 @@ async function dom_actions_add_onclick() {
     dom_notes_table_make();
   });
   $("#action-note-add").click(() => {
-    $("#note-readonly")[0].style.display = "none";
     if ($("#note-header")[0].style.display == "none") {
       $("#note-rw-save")[0].setAttribute("data-note-id", "-1");
-      $("#note-header")[0].style.display = "block";
-      $("#note-rw")[0].style.display = "block";
+      dom_note_content_toggle("rw");
     } else {
-      $("#note-header")[0].style.display = "none";
-      $("#note-rw")[0].style.display = "none";
+      $("#note-rw-discard").click();
     }
   });
   $("#note-rw-discard").click(() => {
     $("#note-subject")[0].value = "";
     tinyMCE.get("note-editor").setContent("");
-    $("#note-header")[0].style.display = "none";
-    $("#note-rw")[0].style.display = "none";
+    dom_note_content_toggle("close");
+  });
+  $("#note-readonly-close").click(() => {
+    dom_note_content_toggle("close");
+  });
+  $("#note-readonly-edit").click(() => {
+    let note_id = $("#note-readonly-edit")[0].getAttribute("data-note-id");
+    dom_note_edit_make(note_id);
   });
   $("#note-rw-save").click(async () => {
     let id = $("#note-rw-save")[0].getAttribute("data-note-id");
@@ -169,7 +190,6 @@ async function dom_actions_add_onclick() {
       await fetch_note_add(item);
     else
       await fetch_note_patch(id, item);
-    $("#note-rw-discard").click();
     $("#action-notes-refresh").click();
   });
 }
