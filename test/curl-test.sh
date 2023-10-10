@@ -44,6 +44,24 @@ note_patch()
         -d '{"content": "This is a test patched note"}'
 }
 
+# tag object
+tags_get()
+{
+    curl -X GET "$HOST/api/tags"
+}
+
+tags_del()
+{
+    curl -X DELETE "$HOST/api/tags"
+}
+
+tag_post()
+{
+    curl -X POST "$HOST/api/tag" \
+        -H 'content-type: application/json' \
+        -d '{"name": "demo"}'
+}
+
 ### TEST SCENARIO ###
 note_interact_scenario()
 {
@@ -54,8 +72,16 @@ note_interact_scenario()
     note_del;
 }
 
+tag_interact_scenario()
+{
+    tag_post;
+    tags_get;
+}
+
 ### MAIN TEST ENV ###
-note_interact_scenario;
+#note_interact_scenario;
+tag_interact_scenario;
 
 # tear down test
-notes_del;
+#notes_del;
+tags_del;
