@@ -56,8 +56,19 @@
             </div>
         </div>
         <div class="row my-4">
-            <div class="col-12">
-                <div style="display:none;" class="card" id="note-header">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header text-light bg-secondary">
+                        <h4>NOTE LIST</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="note-table">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card" id="note-header">
                     <div class="card-header text-light bg-secondary">
                         <h4>NOTE CONTENT</h4>
                     </div>
@@ -95,19 +106,6 @@
                         </div>
                         <button class="btn btn-primary ml-2" data-note-id="-1" id="note-rw-save">Save</button>
                         <button class="btn btn-primary" id="note-rw-discard">Discard</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row my-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header text-light bg-secondary">
-                        <h4>NOTE LIST</h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped" id="note-table">
-                        </table>
                     </div>
                 </div>
             </div>

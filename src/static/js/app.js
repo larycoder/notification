@@ -62,18 +62,15 @@ async function fetch_note_patch(note_id, item) {
  */
 async function dom_note_content_toggle(action) {
   if (action == "close") {
-    $("#note-header")[0].style.display = "none";
     $("#note-readonly")[0].style.display = "none";
     $("#note-rw")[0].style.display = "none";
-  } else {
-    $("#note-header")[0].style.display = "block";
-    if (action == "readonly") {
-      $("#note-readonly")[0].style.display = "block";
-      $("#note-rw")[0].style.display = "none";
-    } else if (action == "rw") {
-      $("#note-readonly")[0].style.display = "none";
-      $("#note-rw")[0].style.display = "block";
-    }
+  }
+  else if (action == "readonly") {
+    $("#note-readonly")[0].style.display = "block";
+    $("#note-rw")[0].style.display = "none";
+  } else if (action == "rw") {
+    $("#note-readonly")[0].style.display = "none";
+    $("#note-rw")[0].style.display = "block";
   }
 }
 
