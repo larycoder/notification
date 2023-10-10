@@ -158,7 +158,7 @@ async function dom_actions_add_onclick() {
     dom_notes_table_make();
   });
   $("#action-note-add").click(() => {
-    if ($("#note-header")[0].style.display == "none") {
+    if ($("#note-rw")[0].style.display == "none") {
       $("#note-rw-save")[0].setAttribute("data-note-id", "-1");
       dom_note_content_toggle("rw");
     } else {
