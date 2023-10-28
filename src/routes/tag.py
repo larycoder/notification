@@ -1,14 +1,23 @@
 from application import api
 import sql_db as db
 from flask import request
-from flask_restx import Resource
+from flask_restx import Resource, fields
 
 # tag_ns = api.namespace("Tag", description="tag object")
 tags_ns = api.namespace("Tags", description="tag list object")
 
+tag_model = api.model(
+    "Tag",
+    {
+        "id": fields.Integer,
+        "name": fields.String,
+    },
+)
+
 
 @tags_ns.route("")
 class Tags(Resource):
+    @api.marshal_with(tag_model, as_list=True)
     def get(self):
         tags = db.Tag.query.all()
         tags_list = []
@@ -21,6 +30,7 @@ class Tags(Resource):
             )
         return tags_list, 200
 
+    @api.response(500, "Internal error.")
     def delete(self):
         try:
             del_num = db.db.session.query(db.Tag).delete()
@@ -31,6 +41,8 @@ class Tags(Resource):
             db.db.session.rollback()
             return "FAIL", 500
 
+    @api.expect(tag_model)
+    @api.response(500, "Internal error.")
     def post(self):
         tag_dict = request.get_json()
         tag = db.Tag(**tag_dict)
