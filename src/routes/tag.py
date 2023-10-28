@@ -4,7 +4,7 @@ from flask import request
 from flask_restx import Resource, fields
 
 # tag_ns = api.namespace("Tag", description="tag object")
-tags_ns = api.namespace("Tags", description="tag list object")
+tags_ns = api.namespace("tags", description="tag list object")
 
 tag_model = api.model(
     "Tag",

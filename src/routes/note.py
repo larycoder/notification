@@ -3,8 +3,8 @@ import sql_db as db
 from flask import request
 from flask_restx import Resource, fields
 
-note_ns = api.namespace("Note", description="note object")
-notes_ns = api.namespace("Notes", description="note list object")
+note_ns = api.namespace("note", description="note object")
+notes_ns = api.namespace("notes", description="note list object")
 
 
 note_model = api.model(
