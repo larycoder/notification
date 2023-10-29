@@ -10,10 +10,12 @@
     <script src="/static/js/jquery-3.7.1.js"></script>
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/tinymce-6.7.0/tinymce.min.js"></script>
+    <script src="/static/js/app.js"></script>
 </header>
 
 <body class="bg-light">
     <div class="container-fluid">
+        <!-- welcome card -->
         <div class="row my-4">
             <div class="col-12">
                 <div class="card">
@@ -26,109 +28,26 @@
                 </div>
             </div>
         </div>
+        <!-- component blocks -->
         <div class="row my-4">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header text-light bg-secondary">
-                        <h4>ACTION</h4>
-                    </div>
-                    <div class="card-body">
-                        <nav class="navbar navbar-expand-xl">
-                            <div class="collapse navbar-collapse">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item" id="action-notes-refresh">
-                                        <button type="button" class="btn btn-light btn-lg"><span class="fa fa-refresh"></span> refresh notes</button>
-                                    </li>
-                                    <li class="nav-item ml-5" id="action-note-add">
-                                        <button type="button" class="btn btn-light btn-lg"><span class="fa fa-plus-square"></span> note</button>
-                                    </li>
-                                    <li class="nav-item ml-5" id="action-notes-delete">
-                                        <button type="button" class="btn btn-light btn-lg"><span class="fa fa-trash"></span> delete notes</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
+            <!-- tag block -->
+            <div class="col-2">
+                <div id="tag-html"></div>
             </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header text-light bg-secondary">
-                        <h4>TAGS</h4>
-                    </div>
-                    <div class="card-body">
-                        <nav class="navbar navbar-expand-xl">
-                            <div class="collapse navbar-collapse">
-                                <ul class="navbar-nav" id="tags-list">
-                                    <li class="nav-item">
-                                        <span class="badge badge-pill badge-primary">TODO: dynamic build tag list</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row my-4">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header text-light bg-secondary">
-                        <h4>NOTE LIST</h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped" id="note-table">
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card" id="note-header">
-                    <div class="card-header text-light bg-secondary">
-                        <h4>NOTE CONTENT</h4>
-                    </div>
-                    <div style="display:none;" class="card-body" id="note-readonly">
-                        <div class="form-group">
-                            <h6 class="font-weight-bold">SUBJECT</h6>
-                            <input type="text" class="form-control" id="note-subject-readonly" readonly></textarea>
-                        </div>
-                        <div class="form-group">
-                            <h6 class="font-weight-bold">CONTENT</h6>
-                            <textarea id="note-editor-readonly"></textarea>
-                            <script>
-                                tinymce.init({
-                                    selector: '#note-editor-readonly',
-                                    readonly: true
-                                });
-                            </script>
-                        </div>
-                        <button class="btn btn-primary" id="note-readonly-close">Close</button>
-                        <button class="btn btn-primary" data-note-id="-1" id="note-readonly-edit">Edit</button>
-                    </div>
-                    <div style="display:none;" class="card-body" id="note-rw">
-                        <div class="form-group">
-                            <h6 class="font-weight-bold">SUBJECT</h6>
-                            <input type="text" class="form-control" id="note-subject"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <h6 class="font-weight-bold">CONTENT</h6>
-                            <textarea id="note-editor"></textarea>
-                            <script>
-                                tinymce.init({
-                                    selector: '#note-editor'
-                                });
-                            </script>
-                        </div>
-                        <button class="btn btn-primary ml-2" data-note-id="-1" id="note-rw-save">Save</button>
-                        <button class="btn btn-primary" id="note-rw-discard">Discard</button>
-                    </div>
+            <!-- main block -->
+            <div class="col-10">
+                <div class="container-fluid">
+                    <div id="action-html"></div>
+                    <div id="note-html"></div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="/static/js/app.js"></script>
+
     <script>
-        dom_notes_table_make();
+        $("#action-html").load("action.html");
+        $("#tag-html").load("tag.html");
+        $("#note-html").load("note.html");
         dom_actions_add_onclick();
     </script>
 </body>

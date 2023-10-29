@@ -1,0 +1,58 @@
+<div class="row my-4">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header text-light bg-secondary">
+                <h4>NOTE LIST</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="note-table">
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card" id="note-header">
+            <div class="card-header text-light bg-secondary">
+                <h4>NOTE CONTENT</h4>
+            </div>
+            <div style="display:none;" class="card-body" id="note-readonly">
+                <div class="form-group">
+                    <h6 class="font-weight-bold">SUBJECT</h6>
+                    <input type="text" class="form-control" id="note-subject-readonly" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <h6 class="font-weight-bold">CONTENT</h6>
+                    <textarea id="note-editor-readonly"></textarea>
+                    <script>
+                        tinymce.init({
+                            selector: '#note-editor-readonly',
+                            readonly: true
+                        });
+                    </script>
+                </div>
+                <button class="btn btn-primary" id="note-readonly-close">Close</button>
+                <button class="btn btn-primary" data-note-id="-1" id="note-readonly-edit">Edit</button>
+            </div>
+            <div style="display:none;" class="card-body" id="note-rw">
+                <div class="form-group">
+                    <h6 class="font-weight-bold">SUBJECT</h6>
+                    <input type="text" class="form-control" id="note-subject"></textarea>
+                </div>
+                <div class="form-group">
+                    <h6 class="font-weight-bold">CONTENT</h6>
+                    <textarea id="note-editor"></textarea>
+                    <script>
+                        tinymce.init({
+                            selector: '#note-editor'
+                        });
+                    </script>
+                </div>
+                <button class="btn btn-primary ml-2" data-note-id="-1" id="note-rw-save">Save</button>
+                <button class="btn btn-primary" id="note-rw-discard">Discard</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    dom_notes_table_make();
+</script>
