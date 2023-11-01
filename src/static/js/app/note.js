@@ -9,13 +9,6 @@ async function fetch_notes_list() {
   return resp.json();
 }
 
-async function fetch_tags_list() {
-  let resp = await fetch("/api/tags", {
-    "method": "GET"
-  });
-  return resp.json();
-}
-
 async function fetch_notes_del() {
   let resp = await fetch("/api/notes", {
     "method": "DELETE"
@@ -71,8 +64,7 @@ async function dom_note_content_toggle(action) {
   if (action == "close") {
     $("#note-readonly")[0].style.display = "none";
     $("#note-rw")[0].style.display = "none";
-  }
-  else if (action == "readonly") {
+  } else if (action == "readonly") {
     $("#note-readonly")[0].style.display = "block";
     $("#note-rw")[0].style.display = "none";
   } else if (action == "rw") {
@@ -152,11 +144,6 @@ async function dom_notes_table_make() {
     body.appendChild(row);
   }
   table.appendChild(body);
-}
-
-async function dom_list_tags_make()
-{
-  /* TODO: build tag list */
 }
 
 async function dom_actions_add_onclick() {
