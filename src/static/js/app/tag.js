@@ -11,12 +11,32 @@ async function fetch_tags_list() {
 /*
  * DOM modification functions
  * */
+async function tag_del(id) {
+  // TODO: implement delete action
+  console.log("Value: ", id);
+}
+
+async function dom_tag_option_make(id) {
+  return `
+  <div class="dropdown">
+    <button type="button" class="btn btn-light" data-toggle="dropdown">
+      <span class="fa fa-ellipsis-v"></span>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#" onclick="tag_del(${id});">Delete</a>
+    </div>
+  </div>`;
+}
+
 async function dom_list_tags_make() {
   let tags = await fetch_tags_list();
   for (let tag of tags) {
     let dom_tag_str = `
     <li class="nav-item">
-      <p><span class="fa fa-tag"></span> ${tag.name}</p>
+      <div class="d-flex justify-content-between">
+        <p><span class="fa fa-tag"></span> ${tag.name}</p>
+        ${await dom_tag_option_make(tag.id)}
+      </div>
     </li>
     `;
     let dom_tag = new DOMParser()
