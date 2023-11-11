@@ -17,7 +17,7 @@ async function fetch_notes_del() {
 }
 
 async function fetch_note_add(item) {
-  let resp = await fetch("/api/note", {
+  let resp = await fetch("/api/notes", {
     "method": "POST",
     "headers": {
       "content-type": "application/json"
