@@ -45,3 +45,8 @@ async function dom_list_tags_make() {
     $("#tags-list")[0].appendChild(dom_tag);
   }
 }
+
+async function dom_tag_event_onclick()
+{
+  // TODO: add onclick event here
+}

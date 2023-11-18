@@ -1,8 +1,9 @@
+<!-- main tag -->
 <div class="card">
     <div class="card-header text-light bg-secondary">
         <div class="d-flex justify-content-between">
             <h4>TAGS</h4>
-            <button type="button" class="btn btn-secondary" id="tag-add">
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tag-add-modal">
                 <span class="fa fa-plus"></span>
             </button>
         </div>
@@ -11,6 +12,25 @@
         <ul style="list-style-type:none;" id="tags-list">
             <!-- list of tag -->
         </ul>
+    </div>
+</div>
+<!-- modal add tag -->
+<div class="modal" tabindex="-1" id="tag-add-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New tag</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control" id="tag-name" placeholder="Tag name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                <button type="button" class="btn" id="tag-add">Save</button>
+            </div>
+        </div>
     </div>
 </div>
 <script src="/static/js/app/tag.js"></script>
