@@ -3,7 +3,7 @@ import sql_db as db
 from flask import request
 from flask_restx import Resource, fields
 
-# tag_ns = api.namespace("Tag", description="tag object")
+tag_ns = api.namespace("tag", description="tag object")
 tags_ns = api.namespace("tags", description="tag list object")
 
 tag_model = api.model(
@@ -52,6 +52,19 @@ class Tags(Resource):
         return {"tag_id": tag_persist.id}, 200
 
 
-# @tag_ns.route("/<string:id>")
-# class Tag(Resource):
-#    pass
+@tag_ns.route("/<string:id>")
+@api.doc(params={"id": "Tag ID"})
+class Tag(Resource):
+    @api.response(500, "Internal error.")
+    def delete(self, id):
+        try:
+            tag = db.Tag.query.filter_by(id=id).first()
+            if tag is None:
+                return "Fail", 404
+            db.db.session.delete(tag)
+            db.db.session.commit()
+            return {"del_id": tag.id}, 200
+        except Exception as e:
+            print(f"[DEBUG] error: {e}")
+            db.db.session.rollback()
+            return "Fail", 500

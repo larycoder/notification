@@ -8,12 +8,20 @@ async function fetch_tags_list() {
   return resp.json();
 }
 
+async function fetch_tag_del(tag_id) {
+  let resp = await fetch(`/api/tag/${tag_id}`, {
+    "method": "DELETE"
+  });
+  return resp.json();
+}
+
 /*
  * DOM modification functions
  * */
 async function tag_del(id) {
-  // TODO: implement delete action
-  console.log("Value: ", id);
+  await fetch_tag_del(id);
+  $("#tags-list")[0].innerHTML = "";
+  dom_list_tags_make();
 }
 
 async function dom_tag_option_make(id) {
@@ -46,7 +54,6 @@ async function dom_list_tags_make() {
   }
 }
 
-async function dom_tag_event_onclick()
-{
+async function dom_tag_event_onclick() {
   // TODO: add onclick event here
 }
