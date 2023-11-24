@@ -8,6 +8,17 @@ async function fetch_tags_list() {
   return resp.json();
 }
 
+async function fetch_tags_add(item) {
+  let resp = await fetch("/api/tags", {
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": JSON.stringify(item)
+  });
+  return resp.json();
+}
+
 async function fetch_tag_del(tag_id) {
   let resp = await fetch(`/api/tag/${tag_id}`, {
     "method": "DELETE"
@@ -55,5 +66,13 @@ async function dom_list_tags_make() {
 }
 
 async function dom_tag_event_onclick() {
-  // TODO: add onclick event here
+  $("#tag-add").click(async () => {
+    let value = document.getElementById("tag-name").value;
+    await fetch_tags_add({
+      "name": value
+    });
+    $("#tags-list")[0].innerHTML = "";
+    dom_list_tags_make();
+    $("#tag-add-modal").modal("toggle");
+  });
 }
