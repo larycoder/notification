@@ -97,17 +97,22 @@ async function dom_note_del(note_id) {
 }
 
 async function dom_notes_table_opts(note_id) {
-  let opts = document.createElement("div");
-  let opt_attrs = `class="btn btn-primary my-2"`;
-  let view = `<button ${opt_attrs} onclick="dom_note_view_make(${note_id})">view</button>`;
-  let edit = `<button ${opt_attrs} onclick="dom_note_edit_make(${note_id})">edit</button>`;
-  let del = `<button ${opt_attrs} onclick="dom_note_del(${note_id})">del</button>`;
-  opts.innerHTML = `${view} ${edit} ${del}`;
-  return opts;
+  return `
+  <div class="dropdown">
+    <button type="button" class="btn" data-toggle="dropdown">
+      <span class="fa fa-ellipsis-v"></span>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#" onclick="dom_note_view_make(${note_id})">View</a>
+      <a class="dropdown-item" href="#" onclick="dom_note_edit_make(${note_id})">Edit</a>
+      <a class="dropdown-item" href="#" onclick="dom_note_del(${note_id})">Delete</a>
+    </div>
+  </div>`;
 }
 
+
 async function dom_notes_table_make() {
-  var fields = ["id", "subject", "action"];
+  var fields = ["id", "subject", "tag", "action"];
   let table = $("#note-table")[0];
 
   /* header */
@@ -116,6 +121,7 @@ async function dom_notes_table_make() {
   for (let field of fields) {
     let header = document.createElement("th");
     header.setAttribute("scope", "col");
+    header.style["text-align"] = "center";
     header.innerText = field;
     headers.appendChild(header);
   }
@@ -131,10 +137,19 @@ async function dom_notes_table_make() {
       if (field == "id") {
         let row_hdr = document.createElement("th");
         row_hdr.setAttribute("scope", "row");
+        row_hdr.style["text-align"] = "center";
         row_hdr.innerText = note.id;
         row.appendChild(row_hdr);
       } else if (field == "action") {
-        row.appendChild(await dom_notes_table_opts(note.id));
+        let row_dat = document.createElement("td")
+        row_dat.style["text-align"] = "center";
+        row_dat.innerHTML = await dom_notes_table_opts(note.id);
+        row.appendChild(row_dat);
+      } else if (field == "tag") {
+        let row_dat = document.createElement("td");
+        row_dat.style["text-align"] = "center";
+        row_dat.innerText = "<TODO:TAG>";
+        row.appendChild(row_dat);
       } else {
         let row_dat = document.createElement("td");
         row_dat.innerText = note[field];
