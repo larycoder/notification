@@ -13,6 +13,7 @@ note_model = api.model(
         "id": fields.Integer,
         "subject": fields.String,
         "content": fields.String(example="Not existed in list GET response."),
+        "tags": fields.List(fields.Raw),
     },
 )
 
@@ -61,7 +62,12 @@ class Note(Resource):
         note = db.Note.query.filter_by(id=id).first()
         if note is None:
             return "Fail", 404
-        return {"id": note.id, "subject": note.subject, "content": note.content}, 200
+        return {
+            "id": note.id,
+            "subject": note.subject,
+            "content": note.content,
+            "tags": [tag.id for tag in note.tags],
+        }, 200
 
     @api.response(500, "Internal error.")
     def delete(self, id):
@@ -85,7 +91,10 @@ class Note(Resource):
             if note is None:
                 return "Fail", 404
             for k, v in request.get_json().items():
-                setattr(note, k, v)
+                if k == "tags":
+                    note.tags_set(v)
+                else:
+                    setattr(note, k, v)
             db.db.session.commit()
             return {"patched_id": note.id}, 200
         except Exception as e:

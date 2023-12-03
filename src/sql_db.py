@@ -18,6 +18,12 @@ class Note(db.Model):
     content = db.Column(db.String(5000), nullable=True)
     tags = db.relationship("Tag", secondary=note_tag, backref="notes")
 
+    def tags_set(self, tags: list):
+        tag_list = []
+        for tag_id in tags:
+            tag_list.append(Tag.query.filter_by(id=tag_id).first())
+        self.tags = tag_list
+
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
