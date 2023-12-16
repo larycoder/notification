@@ -16,7 +16,7 @@ class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     subject = db.Column(db.String(500), nullable=False)
     content = db.Column(db.String(5000), nullable=True)
-    tags = db.relationship("Tag", secondary=note_tag, backref="notes")
+    tags = db.relationship("Tag", secondary=note_tag, backref="note")
 
     def tags_set(self, tags: list):
         tag_list = []
@@ -28,6 +28,7 @@ class Note(db.Model):
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
+    notes = db.relationship("Note", secondary=note_tag, viewonly=True)
 
 
 def generate_db():

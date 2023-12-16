@@ -11,6 +11,7 @@ tag_model = api.model(
     {
         "id": fields.Integer,
         "name": fields.String,
+        "notes": fields.Integer,
     },
 )
 
@@ -55,6 +56,18 @@ class Tags(Resource):
 @tag_ns.route("/<string:id>")
 @api.doc(params={"id": "Tag ID"})
 class Tag(Resource):
+    @api.response(400, "Tag not found.")
+    @api.response(500, "Internal error.")
+    def get(self, id):
+        tag = db.Tag.query.filter_by(id=id).first()
+        if tag is None:
+            return "Fail", 400
+        return {
+            "id": tag.id,
+            "name": tag.name,
+            "notes": [note.id for note in tag.notes],
+        }, 200
+
     @api.response(500, "Internal error.")
     def delete(self, id):
         try:

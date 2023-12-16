@@ -13,7 +13,7 @@ note_model = api.model(
         "id": fields.Integer,
         "subject": fields.String,
         "content": fields.String(example="Not existed in list GET response."),
-        "tags": fields.List(fields.Raw),
+        "tags": fields.List(fields.Integer),
     },
 )
 
@@ -29,6 +29,7 @@ class Notes(Resource):
                 {
                     "id": item.id,
                     "subject": item.subject,
+                    "tags": [tag.id for tag in item.tags],
                 }
             )
         return note_dict_list, 200
