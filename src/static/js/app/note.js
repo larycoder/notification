@@ -96,6 +96,10 @@ async function dom_note_del(note_id) {
   table.deleteRow(row_idx);
 }
 
+async function dom_note_tag_make(note_id) {
+  console.log("TODO: build tag modal");
+}
+
 async function dom_notes_table_opts(note_id) {
   return `
   <div class="dropdown">
@@ -106,6 +110,7 @@ async function dom_notes_table_opts(note_id) {
       <a class="dropdown-item" href="#" onclick="dom_note_view_make(${note_id})">View</a>
       <a class="dropdown-item" href="#" onclick="dom_note_edit_make(${note_id})">Edit</a>
       <a class="dropdown-item" href="#" onclick="dom_note_del(${note_id})">Delete</a>
+      <a class="dropdown-item" href="#" onclick="dom_note_tag_make(${note_id})">Tag</a>
     </div>
   </div>`;
 }
