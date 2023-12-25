@@ -52,6 +52,26 @@ async function fetch_note_patch(note_id, item) {
   return resp.json();
 }
 
+async function fetch_tag_get(tag_id) {
+  let resp = await fetch(`/api/tag/${tag_id}`, {
+    "method": "GET",
+    "headers": {
+      "content-type": "application/json"
+    },
+  });
+  return resp.json();
+}
+
+async function fetch_tags_get() {
+  let resp = await fetch(`/api/tags`, {
+    "method": "GET",
+    "headers": {
+      "content-type": "application/json"
+    },
+  });
+  return resp.json();
+}
+
 /*
  * DOM modification functions
  * */
@@ -97,7 +117,16 @@ async function dom_note_del(note_id) {
 }
 
 async function dom_note_tag_make(note_id) {
-  console.log("TODO: build tag modal");
+  let tags = await fetch_tags_get();
+  let tag_opts = $("#note-tag-list")[0];
+  tag_opts.innerHTML = "<option value='-1' selected>Tag list</option>";
+  for (let tag of tags) {
+    tag_opts.innerHTML += `
+      <option value=${tag.id}>${tag.name}</option>
+    `;
+  }
+  $("#note-tag-modal").attr("tabindex", note_id);
+  $("#note-tag-modal").modal("show");
 }
 
 async function dom_notes_table_opts(note_id) {
@@ -151,9 +180,14 @@ async function dom_notes_table_make() {
         row_dat.innerHTML = await dom_notes_table_opts(note.id);
         row.appendChild(row_dat);
       } else if (field == "tag") {
+        let tag = {
+          "name": ""
+        };
         let row_dat = document.createElement("td");
         row_dat.style["text-align"] = "center";
-        row_dat.innerText = "<TODO:TAG>";
+        if (note.tags.length > 0)
+          tag = await fetch_tag_get(note.tags[0]); // assume one note one tag
+        row_dat.innerText = tag.name;
         row.appendChild(row_dat);
       } else {
         let row_dat = document.createElement("td");
@@ -207,5 +241,19 @@ async function dom_actions_add_onclick() {
     else
       await fetch_note_patch(id, item);
     $("#action-notes-refresh").click();
+  });
+  $("#note-tag-save").click(async () => {
+    let note_id = $("#note-tag-modal").attr("tabindex");
+    let note = await fetch_note_get(note_id);
+    let tag_id = $("#note-tag-list")[0].value;
+    if (tag_id == -1) {
+      console.log("Please choose one tag.");
+      return;
+    }
+    note.tags = [tag_id];
+    $("#note-table")[0].innerHTML = '';
+    await fetch_note_patch(note_id, note);
+    $("#note-tag-modal").modal("hide");
+    dom_notes_table_make();
   });
 }
