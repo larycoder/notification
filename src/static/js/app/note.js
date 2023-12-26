@@ -72,6 +72,19 @@ async function fetch_tags_get() {
   return resp.json();
 }
 
+async function fetch_notes_filter(tag_name) {
+  let params = new URLSearchParams({
+    "tag_name": tag_name,
+  });
+  let resp = await fetch(`/api/notes/filter?${params.toString()}`, {
+    "method": "GET",
+    "headers": {
+      "content-type": "application/json"
+    },
+  });
+  return resp.json();
+}
+
 /*
  * DOM modification functions
  * */
@@ -145,7 +158,7 @@ async function dom_notes_table_opts(note_id) {
 }
 
 
-async function dom_notes_table_make() {
+async function dom_notes_table_make(notes_get_func) {
   var fields = ["id", "subject", "tag", "action"];
   let table = $("#note-table")[0];
 
@@ -163,7 +176,7 @@ async function dom_notes_table_make() {
 
   /* row */
   let body = document.createElement("tbody");
-  let notes = await fetch_notes_list();
+  let notes = await notes_get_func();
   for (let note of notes) {
     let row = document.createElement("tr");
     row.setAttribute("id", `notes-table-row-${note.id}`)
@@ -203,12 +216,12 @@ async function dom_notes_table_make() {
 async function dom_actions_add_onclick() {
   $("#action-notes-refresh").click(() => {
     $("#note-table")[0].innerHTML = '';
-    dom_notes_table_make();
+    dom_notes_table_make(fetch_notes_list);
   });
   $("#action-notes-delete").click(async () => {
     await fetch_notes_del();
     $("#note-table")[0].innerHTML = '';
-    dom_notes_table_make();
+    dom_notes_table_make(fetch_notes_list);
   });
   $("#action-note-add").click(() => {
     if ($("#note-rw")[0].style.display == "none") {
@@ -254,6 +267,13 @@ async function dom_actions_add_onclick() {
     $("#note-table")[0].innerHTML = '';
     await fetch_note_patch(note_id, note);
     $("#note-tag-modal").modal("hide");
-    dom_notes_table_make();
+    dom_notes_table_make(fetch_notes_list);
+  });
+  $("#action-note-filter").click(async () => {
+    let tag_name = $("#action-note-filter-value")[0].value;
+    $("#note-table")[0].innerHTML = '';
+    dom_notes_table_make(async () => {
+      return await fetch_notes_filter(tag_name);
+    });
   });
 }
