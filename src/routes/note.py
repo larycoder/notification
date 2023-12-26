@@ -1,7 +1,7 @@
-from application import api
+from application import app, api
 import sql_db as db
 from flask import request
-from flask_restx import Resource, fields
+from flask_restx import Resource, fields, reqparse
 
 note_ns = api.namespace("note", description="note object")
 notes_ns = api.namespace("notes", description="note list object")
@@ -16,6 +16,9 @@ note_model = api.model(
         "tags": fields.List(fields.Integer),
     },
 )
+
+note_filter_model = reqparse.RequestParser()
+note_filter_model.add_argument("tag_name", type=str)
 
 
 @notes_ns.route("")
@@ -53,6 +56,26 @@ class Notes(Resource):
             print(f"[DEBUG] error: {e}")
             db.db.session.rollback()
             return "Fail", 500
+
+
+@notes_ns.route("/filter")
+class NoteFilter(Resource):
+    @api.expect(note_filter_model)
+    @api.marshal_with(note_model, as_list=True)
+    def get(self):
+        tag_name = note_filter_model.parse_args()["tag_name"]
+        note_list = db.Note.query.filter(db.Note.tags.any(db.Tag.name == tag_name))
+        print(note_list)
+        note_dict_list = []
+        for item in note_list:
+            note_dict_list.append(
+                {
+                    "id": item.id,
+                    "subject": item.subject,
+                    "tags": [tag.id for tag in item.tags],
+                }
+            )
+        return note_dict_list, 200
 
 
 @note_ns.route("/<string:id>")
